@@ -1,0 +1,201 @@
+
+<h2 class="sr-only">Calculadora de impacto: estima el ahorro potencial en la tarifa de aseo de tu edificio con resi</h2>
+
+<style>
+.calc-wrap { padding: 2rem; max-width: 680px; margin: 0 auto; }
+.section-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-secondary); margin: 0 0 0.5rem; }
+.estrato-btn { padding: 0.6rem; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-secondary); font-size: 14px; cursor: pointer; text-align: center; transition: all 0.15s; }
+.estrato-btn.active { border: 2px solid #1D9E75; color: #0F6E56; background: #E1F5EE; font-weight: 500; }
+.result-card { background: #E1F5EE; border: 0.5px solid #5DCAA5; border-radius: var(--border-radius-lg); padding: 1.5rem; }
+.divider { height: 0.5px; background: var(--color-border-tertiary); margin: 1.5rem 0; }
+.insight-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+.insight-icon { width: 32px; height: 32px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.hogar-stat { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 0.75rem; gap: 6px; }
+.hogar-stat-icon { font-size: 22px; }
+.hogar-stat-value { font-size: 20px; font-weight: 500; color: var(--color-text-primary); line-height: 1; }
+.hogar-stat-label { font-size: 11px; color: var(--color-text-secondary); text-align: center; line-height: 1.4; }
+</style>
+
+<div class="calc-wrap">
+
+  <div style="margin-bottom: 1.5rem;">
+    <h2 style="font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 0.4rem; line-height: 1.3;">¿Cuánto podría ahorrar tu edificio?</h2>
+    <p style="font-size: 15px; color: var(--color-text-secondary); margin: 0; line-height: 1.6;">Ingresa los datos de tu copropiedad y calcula el potencial de ahorro en la tarifa de aseo.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+    <div>
+      <p class="section-label">Estrato del edificio</p>
+      <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 8px;">
+        <button class="estrato-btn active" onclick="setEstrato(3, this)">3</button>
+        <button class="estrato-btn" onclick="setEstrato(4, this)">4</button>
+        <button class="estrato-btn" onclick="setEstrato(56, this)">5 – 6</button>
+      </div>
+    </div>
+    <div>
+      <p class="section-label">Número de hogares</p>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+        <input type="range" min="10" max="400" step="10" value="50" id="hogares-range" style="flex:1;" oninput="setHogares(this.value)">
+        <span style="font-size: 15px; font-weight: 500; min-width: 36px; text-align:right;" id="hogares-out">50</span>
+      </div>
+      <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0;">hogares</p>
+    </div>
+  </div>
+
+  <!-- Datos base por hogar — versión visual -->
+  <div style="margin-bottom: 1.5rem;">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.75rem;">
+      <p class="section-label" style="margin:0;">Por hogar en tu edificio</p>
+      <span style="font-size: 11px; background: #E1F5EE; color: #0F6E56; border-radius: var(--border-radius-md); padding: 2px 8px; font-weight: 500;">Verifica en tu factura</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px;">
+      <div class="hogar-stat">
+        <i class="ti ti-trash" aria-hidden="true" style="font-size:22px; color: var(--color-text-secondary);"></i>
+        <span class="hogar-stat-value" id="h-kg-total">40 kg</span>
+        <span class="hogar-stat-label">residuos<br>al mes</span>
+      </div>
+      <div class="hogar-stat">
+        <i class="ti ti-recycle" aria-hidden="true" style="font-size:22px; color: #1D9E75;"></i>
+        <span class="hogar-stat-value" style="color: #1D9E75;" id="h-kg-reciclables">20 kg</span>
+        <span class="hogar-stat-label">son<br>reciclables</span>
+      </div>
+      <div class="hogar-stat">
+        <i class="ti ti-receipt" aria-hidden="true" style="font-size:22px; color: var(--color-text-secondary);"></i>
+        <span class="hogar-stat-value" id="h-costo">$12.000</span>
+        <span class="hogar-stat-label">paga por<br>manejo de residuos</span>
+      </div>
+      <div class="hogar-stat" style="background: #E1F5EE; border-color: #5DCAA5;">
+        <i class="ti ti-arrow-down-right" aria-hidden="true" style="font-size:22px; color: #0F6E56;"></i>
+        <span class="hogar-stat-value" style="color: #0F6E56;" id="h-ahorro-max">$6.000</span>
+        <span class="hogar-stat-label" style="color: #0F6E56;">ahorro<br>máximo posible</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slider tasa -->
+  <div style="margin-bottom: 1.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <p class="section-label" style="margin:0;">Tasa de reciclaje del edificio</p>
+      <span style="font-size: 13px; color: var(--color-text-secondary);">Mueve para explorar el potencial</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <input type="range" min="0" max="50" step="5" value="30" id="tasa-range" style="flex:1;" oninput="setTasa(this.value)">
+      <span style="font-size: 15px; font-weight: 500; min-width: 42px; text-align:right;" id="tasa-out">30%</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+      <span style="font-size: 11px; color: var(--color-text-tertiary);">0% — sin reciclaje</span>
+      <span style="font-size: 11px; color: #1D9E75; font-weight: 500;">50% — máximo potencial</span>
+    </div>
+  </div>
+
+  <!-- Result card con kg integrados -->
+  <div class="result-card" style="margin-bottom: 1.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <p style="font-size: 13px; color: #0F6E56; margin: 0 0 4px;">Ahorro potencial mensual</p>
+        <p style="font-size: 32px; font-weight: 500; color: #0F6E56; margin: 0; line-height: 1;" id="ahorro-mes">$180.000</p>
+        <p style="font-size: 13px; color: #0F6E56; margin: 4px 0 0;" id="ahorro-pct">30% de descuento sobre manejo de residuos</p>
+      </div>
+      <div style="text-align: right;">
+        <p style="font-size: 13px; color: #0F6E56; margin: 0 0 4px;">Ahorro anual proyectado</p>
+        <p style="font-size: 22px; font-weight: 500; color: #0F6E56; margin: 0 0 12px; line-height: 1;" id="ahorro-anual">$2.160.000</p>
+        <div style="background: #C0DD97; border-radius: var(--border-radius-md); padding: 6px 12px; display: inline-block;">
+          <p style="font-size: 11px; color: #27500A; margin: 0 0 2px; font-weight: 500;">Kg reciclados con resi</p>
+          <p style="font-size: 18px; font-weight: 500; color: #0F6E56; margin: 0; line-height: 1;" id="kg-reciclados">300 kg/mes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div style="margin-bottom: 1rem;">
+    <p style="font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 1rem;">¿Cómo resi hace posible este ahorro?</p>
+    <div class="insight-row">
+      <div class="insight-icon" style="background: #E1F5EE; color: #0F6E56;">
+        <i class="ti ti-chart-line" aria-hidden="true"></i>
+      </div>
+      <div>
+        <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 2px;">resi mide tu tasa de reciclaje mes a mes</p>
+        <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0; line-height: 1.5;">Sin datos no puedes demostrar ante la empresa de aseo que tu edificio recicla. resi genera los reportes que necesitas para aplicar a la tarifa multiusuario.</p>
+      </div>
+    </div>
+    <div class="insight-row">
+      <div class="insight-icon" style="background: #FAEEDA; color: #854F0B;">
+        <i class="ti ti-users" aria-hidden="true"></i>
+      </div>
+      <div>
+        <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 2px;">A mayor participación, mayor ahorro</p>
+        <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0; line-height: 1.5;">El descuento máximo (50%) se alcanza cuando todos los hogares reciclan con resi. Mueve el slider para ver cómo crece el ahorro con cada nuevo hogar que se une.</p>
+      </div>
+    </div>
+    <div class="insight-row" style="margin-bottom: 0;">
+      <div class="insight-icon" style="background: #E6F1FB; color: #185FA5;">
+        <i class="ti ti-receipt" aria-hidden="true"></i>
+      </div>
+      <div>
+        <p style="font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 2px;">El ahorro se aplica en la tarifa de aseo</p>
+        <p style="font-size: 12px; color: var(--color-text-secondary); margin: 0; line-height: 1.5;">En Colombia, las copropiedades que formalizan el reciclaje pueden acceder a la tarifa multiusuario y reducir el componente de manejo de residuos hasta en un 50%.</p>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 0; line-height: 1.5;">* Valores calculados según promedios de generación de residuos por estrato en Colombia. El ahorro real depende de la tasa de reciclaje efectiva del edificio y de la normativa vigente de la empresa de aseo.</p>
+
+</div>
+
+<script>
+const DATA = {
+  3:  { kg: 40, reciclables: 20, costo: 12000 },
+  4:  { kg: 45, reciclables: 22, costo: 16000 },
+  56: { kg: 50, reciclables: 25, costo: 20000 }
+};
+
+let estrato = 3;
+let hogares = 50;
+let tasa = 30;
+
+function fmtPesos(n) {
+  return '$' + Math.round(n).toLocaleString('es-CO');
+}
+
+function update() {
+  const d = DATA[estrato];
+  const kgReciclablesTotal = d.reciclables * hogares;
+  const kgReciclados = Math.round(kgReciclablesTotal * tasa / 100);
+  const facturaTotal = d.costo * hogares;
+  const ahorroMes = Math.round(facturaTotal * tasa / 100);
+  const ahorroAnual = ahorroMes * 12;
+
+  document.getElementById('h-kg-total').textContent = d.kg + ' kg';
+  document.getElementById('h-kg-reciclables').textContent = d.reciclables + ' kg';
+  document.getElementById('h-costo').textContent = fmtPesos(d.costo);
+  document.getElementById('h-ahorro-max').textContent = fmtPesos(d.costo * 0.5);
+
+  document.getElementById('kg-reciclados').textContent = kgReciclados.toLocaleString('es-CO') + ' kg/mes';
+  document.getElementById('ahorro-mes').textContent = fmtPesos(ahorroMes);
+  document.getElementById('ahorro-anual').textContent = fmtPesos(ahorroAnual);
+  document.getElementById('ahorro-pct').textContent = Math.round(tasa) + '% de descuento sobre manejo de residuos';
+}
+
+function setEstrato(val, btn) {
+  estrato = val;
+  document.querySelectorAll('.estrato-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  update();
+}
+
+function setHogares(val) {
+  hogares = parseInt(val);
+  document.getElementById('hogares-out').textContent = hogares;
+  update();
+}
+
+function setTasa(val) {
+  tasa = parseInt(val);
+  document.getElementById('tasa-out').textContent = tasa + '%';
+  update();
+}
+
+update();
+</script>

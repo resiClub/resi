@@ -1,0 +1,139 @@
+
+<style>
+.stepper-wrap{display:flex;gap:48px;padding:2rem 0;font-family:var(--font-sans)}
+.step-nav{display:flex;flex-direction:column;gap:0;min-width:220px;position:relative}
+.step-nav::before{content:'';position:absolute;left:19px;top:24px;bottom:24px;width:1px;background:var(--color-border-tertiary)}
+.step-btn{display:flex;align-items:flex-start;gap:14px;padding:12px 0;cursor:pointer;background:none;border:none;text-align:left;width:100%;position:relative;z-index:1}
+.step-num{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--color-border-tertiary);background:var(--color-background-primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:var(--color-text-secondary);flex-shrink:0;transition:all .2s}
+.step-btn.active .step-num{background:#4CA548;border-color:#4CA548;color:#fff}
+.step-label{font-size:14px;color:var(--color-text-secondary);padding-top:9px;transition:color .2s;line-height:1.3}
+.step-btn.active .step-label{color:#2D2147;font-weight:500}
+.step-content{flex:1}
+.step-panel{display:none}
+.step-panel.active{display:block}
+.step-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#4CA548;margin-bottom:8px}
+.step-title{font-size:26px;font-weight:700;color:#2D2147;line-height:1.2;margin-bottom:12px}
+.step-title span{color:#4CA548}
+.step-desc{font-size:15px;color:var(--color-text-secondary);line-height:1.65;margin-bottom:20px}
+.step-checks{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.step-checks li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--color-text-secondary)}
+.step-checks li::before{content:'✓';color:#4CA548;font-weight:700;flex-shrink:0;margin-top:1px}
+.step-img{width:100%;height:180px;background:var(--color-background-secondary);border-radius:12px;border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--color-text-tertiary);letter-spacing:0.05em;text-transform:uppercase}
+.step-footer{display:flex;gap:10px;margin-top:20px}
+.btn-prev{padding:8px 16px;font-size:13px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:none;color:var(--color-text-secondary);cursor:pointer}
+.btn-next{padding:8px 20px;font-size:13px;border-radius:8px;border:none;background:#4CA548;color:#fff;cursor:pointer;font-weight:500}
+.btn-next:disabled,.btn-prev:disabled{opacity:0.3;cursor:default}
+</style>
+
+<h2 class="sr-only">Mockup del stepper interactivo para la sección "Así funciona Resi" dirigida a administradores</h2>
+
+<div class="stepper-wrap">
+  <nav class="step-nav" aria-label="Pasos del proceso">
+    <button class="step-btn active" onclick="goTo(0)">
+      <span class="step-num">1</span>
+      <span class="step-label">Instala Punto Limpio</span>
+    </button>
+    <button class="step-btn" onclick="goTo(1)">
+      <span class="step-num">2</span>
+      <span class="step-label">Hogares reciclan</span>
+    </button>
+    <button class="step-btn" onclick="goTo(2)">
+      <span class="step-num">3</span>
+      <span class="step-label">Recolección segura</span>
+    </button>
+    <button class="step-btn" onclick="goTo(3)">
+      <span class="step-num">4</span>
+      <span class="step-label">Crece tu tasa</span>
+    </button>
+    <button class="step-btn" onclick="goTo(4)">
+      <span class="step-num">5</span>
+      <span class="step-label">Comunidad motivada</span>
+    </button>
+  </nav>
+
+  <div class="step-content">
+    <div class="step-panel active">
+      <div class="step-eyebrow">● Así funciona resi</div>
+      <div class="step-title">1. Instala el <span>Punto Limpio</span></div>
+      <div class="step-desc">Instalamos el sistema de contenedores en tu edificio, organizados por categoría de residuo. Sin obras, sin complicaciones.</div>
+      <ul class="step-checks">
+        <li>Señalética clara para cada categoría</li>
+        <li>Hasta 12 tipos de residuo</li>
+        <li>Instalación en 1 día</li>
+      </ul>
+      <div class="step-img">Foto — Punto Limpio instalado</div>
+    </div>
+
+    <div class="step-panel">
+      <div class="step-eyebrow">● Así funciona resi</div>
+      <div class="step-title">2. <span>Hogares</span> reciclan</div>
+      <div class="step-desc">Cada apartamento separa y deposita sus residuos en el Punto Limpio. Separan fácil, sin depender de cada uno.</div>
+      <ul class="step-checks">
+        <li>Opción A: separan desde el shut</li>
+        <li>Opción B: separan con resiCUBO en casa</li>
+        <li>Sin fricción para el residente</li>
+      </ul>
+      <div class="step-img">Foto — Residente depositando residuos</div>
+    </div>
+
+    <div class="step-panel">
+      <div class="step-eyebrow">● Así funciona resi</div>
+      <div class="step-title">3. <span>Recolección</span> segura</div>
+      <div class="step-desc">Un reciclador de tu confianza recoge los residuos directamente en tu edificio. En el shut, sin mezclas.</div>
+      <ul class="step-checks">
+        <li>Personal 100% identificado</li>
+        <li>Sin manipulación directa de residuos</li>
+        <li>Garantía de destino final</li>
+      </ul>
+      <div class="step-img">Foto — Reciclador en el edificio</div>
+    </div>
+
+    <div class="step-panel">
+      <div class="step-eyebrow">● Así funciona resi</div>
+      <div class="step-title">4. <span>Crece</span> tu tasa</div>
+      <div class="step-desc">Medimos el reciclaje de tu edificio y te reportamos el impacto mes a mes. Trazabilidad mensual para cumplir la norma.</div>
+      <ul class="step-checks">
+        <li>Tasa de reciclaje monitorizada</li>
+        <li>Comparativa mensual</li>
+        <li>Datos para reducir tarifa de aseo</li>
+      </ul>
+      <div class="step-img">Foto — Dashboard de trazabilidad</div>
+    </div>
+
+    <div class="step-panel">
+      <div class="step-eyebrow">● Así funciona resi</div>
+      <div class="step-title">5. Comunidad <span>motivada</span></div>
+      <div class="step-desc">Tus residentes ven su impacto y se motivan a reciclar más cada mes. Reportes cada mes, menos quejas, más cultura.</div>
+      <ul class="step-checks">
+        <li>Reportes vía WhatsApp a residentes</li>
+        <li>Próximos pasos y metas</li>
+        <li>Ranking por apartamento</li>
+      </ul>
+      <div class="step-img">Foto — App con reporte mensual</div>
+    </div>
+
+    <div class="step-footer">
+      <button class="btn-prev" id="btn-prev" onclick="goTo(current-1)" disabled>← Anterior</button>
+      <button class="btn-next" id="btn-next" onclick="goTo(current+1)">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let current = 0;
+const panels = document.querySelectorAll('.step-panel');
+const btns = document.querySelectorAll('.step-btn');
+const prev = document.getElementById('btn-prev');
+const next = document.getElementById('btn-next');
+
+function goTo(i) {
+  if (i < 0 || i >= panels.length) return;
+  panels[current].classList.remove('active');
+  btns[current].classList.remove('active');
+  current = i;
+  panels[current].classList.add('active');
+  btns[current].classList.add('active');
+  prev.disabled = current === 0;
+  next.disabled = current === panels.length - 1;
+}
+</script>

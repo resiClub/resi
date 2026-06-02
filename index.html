@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>resi · Cuidamos lo importante</title>
+<link rel="stylesheet" href="colors_and_type.css">
+
+<!-- React + Babel (pinned) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- Lucide icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--resi-bg); font-family: var(--font-body); color: var(--resi-fg); scroll-behavior: smooth; }
+  /* Responsive base guard: never allow horizontal scroll on any viewport. */
+  html, body { overflow-x: hidden; max-width: 100%; }
+  img, video { max-width: 100%; }
+  /* Horizontal scroll rows (mobile carousels) hide their scrollbar — a progress hint stands in. */
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  @keyframes resiStepFade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes resiSwipeHint {
+    0%   { opacity: 0; transform: translateX(-10px); }
+    15%  { opacity: 1; }
+    45%  { transform: translateX(14px); }
+    75%  { opacity: 1; transform: translateX(-4px); }
+    100% { opacity: 0; transform: translateX(10px); }
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+  ::selection { background: var(--resi-green); color: #fff; }
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    background: var(--resi-bg-muted); height: 6px; border-radius: 999px;
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--resi-green);
+    box-shadow: 0 2px 6px rgba(7,7,78,.18);
+    cursor: pointer; border: 3px solid #fff;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--resi-green); border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(7,7,78,.18); cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+  // Single-page app served from the project root — assets are siblings.
+  window.__ASSET_BASE = "";
+
+  // Persisted tweak defaults (editable on disk)
+  window.__TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "heroLayout": "split",
+    "heroAccent": "green",
+    "showRewardsBg": true,
+    "plansStyle": "card",
+    "ctaCopy": "Activar reciclaje"
+  }/*EDITMODE-END*/;
+</script>
+
+<!-- Shared primitives + persistent shell -->
+<script type="text/babel" src="src/ui.jsx"></script>
+<script type="text/babel" src="src/tweaks-panel.jsx"></script>
+<script type="text/babel" src="src/NavBar.jsx"></script>
+<script type="text/babel" src="src/ResiFooter.jsx"></script>
+
+<!-- Administradores route body -->
+<script type="text/babel" src="src/AdminHero.jsx"></script>
+<script type="text/babel" src="src/ProblemSection.jsx"></script>
+<script type="text/babel" src="src/HowItWorks.jsx"></script>
+<script type="text/babel" src="src/ImpactSection.jsx"></script>
+<script type="text/babel" src="src/PlansSection.jsx"></script>
+<script type="text/babel" src="src/Calculator.jsx"></script>
+<script type="text/babel" src="src/FaqSection.jsx"></script>
+
+<!-- Hogares route body -->
+<script type="text/babel" src="src/HogaresHero.jsx"></script>
+<script type="text/babel" src="src/HogaresProblem.jsx"></script>
+<script type="text/babel" src="src/HogaresHowItWorks.jsx"></script>
+<script type="text/babel" src="src/HogaresImpact.jsx"></script>
+<script type="text/babel" src="src/HogaresReviews.jsx"></script>
+<script type="text/babel" src="src/HogaresPlans.jsx"></script>
+<script type="text/babel" src="src/HogaresCalculator.jsx"></script>
+
+<script type="text/babel" data-presets="env,react">
+// --- Route helpers ------------------------------------------------
+const ROUTES = ["administradores", "hogares"];
+const routeFromHash = () => {
+  const h = (location.hash || "").replace(/^#\/?/, "").toLowerCase();
+  return ROUTES.includes(h) ? h : "administradores";
+};
+
+// --- Route bodies (no nav / no footer — the shell owns those) -----
+const AdminBody = ({ tweaks }) => (
+  <div data-screen-label="Landing Administradores">
+    <AdminHero tweaks={tweaks} />
+    <ProblemSection />
+    <HowItWorks />
+    <ImpactSection />
+    <PlansSection style={tweaks.plansStyle} />
+    <Calculator />
+    <FaqSection variant="admins" />
+  </div>
+);
+
+const HogaresBody = () => (
+  <div data-screen-label="Landing Hogares">
+    <HogaresHero />
+    <HogaresProblem />
+    <HogaresHowItWorks />
+    <HogaresImpact />
+    <HogaresReviews />
+    <HogaresPlans />
+    <HogaresCalculator />
+    <FaqSection variant="hogares" />
+  </div>
+);
+
+// --- Persistent app shell -----------------------------------------
+const App = () => {
+  const [route, setRoute] = React.useState(routeFromHash());
+  const [tweaks, setTweak] = (typeof useTweaks === 'function')
+    ? useTweaks(window.__TWEAK_DEFAULTS)
+    : [window.__TWEAK_DEFAULTS, () => {}];
+
+  // Route changes flow through the URL hash so deep links + back/forward work.
+  const goRoute = React.useCallback((r) => {
+    if (!ROUTES.includes(r)) return;
+    if (("#" + r) !== location.hash) location.hash = r;
+    else setRoute(r);
+  }, []);
+  React.useEffect(() => { window.__resiSetRoute = goRoute; }, [goRoute]);
+
+  React.useEffect(() => {
+    const on = () => setRoute(routeFromHash());
+    window.addEventListener("hashchange", on);
+    return () => window.removeEventListener("hashchange", on);
+  }, []);
+
+  // On route switch, return to the top so each landing opens at its hero.
+  // The nav is outside this effect's DOM and stays put (no remount).
+  const firstRender = React.useRef(true);
+  React.useEffect(() => {
+    if (firstRender.current) { firstRender.current = false; return; }
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [route]);
+
+  // Refresh lucide icons after each render.
+  React.useEffect(() => {
+    const id = setTimeout(() => window.lucide && window.lucide.createIcons(), 30);
+    return () => clearTimeout(id);
+  });
+
+  const isHogares = route === "hogares";
+  const ctaCopy = isHogares ? "Unirme ahora" : (tweaks.ctaCopy || "Activar reciclaje");
+
+  return (
+    <React.Fragment>
+      {/* Persistent navbar — same element across routes, never remounts */}
+      <NavBar route={route} onRoute={goRoute} ctaCopy={ctaCopy} />
+
+      {isHogares ? <HogaresBody /> : <AdminBody tweaks={tweaks} />}
+
+      <ResiFooter variant={isHogares ? "hogares" : "admins"} />
+
+      {!isHogares && typeof AdminTweaks === 'function' &&
+        <AdminTweaks tweaks={tweaks} setTweak={setTweak} />}
+    </React.Fragment>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+
+<script type="text/babel" src="src/AdminTweaks.jsx"></script>
+</body>
+</html>

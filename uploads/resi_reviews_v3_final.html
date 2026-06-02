@@ -1,0 +1,248 @@
+
+<style>
+*{box-sizing:border-box}
+.wrap{padding:1.5rem 0;font-family:var(--font-sans)}
+.eyebrow{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#4CA548;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.eyebrow::before{content:'●';font-size:8px}
+.sec-title{font-size:20px;font-weight:700;color:#2D2147;margin-bottom:20px;line-height:1.2}
+.sec-title span{color:#4CA548}
+.frame{background:var(--color-background-secondary);border-radius:12px;border:0.5px solid var(--color-border-tertiary);padding:24px;margin-bottom:20px}
+.frame-label{font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-secondary);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+
+/* ── DESKTOP ── */
+.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.review-card{background:var(--color-background-primary);border-radius:16px;padding:24px;border:0.5px solid var(--color-border-tertiary);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.review-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#4CA548,#008ECA)}
+.card-stars{display:flex;gap:3px;margin-bottom:10px}
+.card-stars span{color:#4CA548;font-size:13px}
+.card-quote{font-size:26px;color:#4CA548;opacity:0.25;font-family:Georgia,serif;line-height:1;margin-bottom:8px}
+
+/* ALTURA FIJA — basada en la opinión más larga (3 líneas) */
+.card-text-zone{height:72px;overflow:hidden;display:flex;align-items:flex-start}
+.card-text{font-size:13px;color:#2D2147;line-height:1.65;font-style:italic;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;animation:textIn .3s ease}
+@keyframes textIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+.card-divider{height:0.5px;background:var(--color-border-tertiary);margin:16px 0}
+.card-reviewer{display:flex;align-items:center;gap:10px}
+.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;transition:background .3s}
+.reviewer-info{display:flex;flex-direction:column;gap:1px}
+.r-name{font-size:13px;font-weight:600;color:#2D2147}
+.r-meta{font-size:11px;color:#6B7280}
+.r-time{font-size:10px;color:#4CA548;font-weight:500;margin-top:1px}
+
+.prog-zone{margin-top:8px}
+.prog-track{height:2px;background:var(--color-border-tertiary);border-radius:1px;overflow:hidden}
+.prog-fill{height:100%;background:#4CA548;border-radius:1px;width:0%}
+.ctrl-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.c-dots{display:flex;gap:5px}
+.c-dot{width:5px;height:5px;border-radius:50%;background:var(--color-border-tertiary);cursor:pointer;border:none;padding:0;transition:all .2s}
+.c-dot.active{width:16px;border-radius:3px;background:#4CA548}
+.c-btns{display:flex;gap:6px}
+.c-btn{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;font-size:12px;color:#2D2147;display:flex;align-items:center;justify-content:center}
+.c-btn:hover{background:#4CA548;color:#fff;border-color:#4CA548}
+
+.stats-col{display:flex;flex-direction:column;gap:12px}
+.stat-card{background:var(--color-background-primary);border-radius:12px;padding:18px;border:0.5px solid var(--color-border-tertiary)}
+.stat-num{font-size:30px;font-weight:700;color:#4CA548;line-height:1}
+.stat-stars{display:flex;gap:2px;margin-top:4px}
+.stat-stars span{color:#4CA548;font-size:11px}
+.stat-lbl{font-size:11px;color:#6B7280;margin-top:5px;line-height:1.4}
+.bar-lbl{font-size:11px;color:#6B7280;margin-bottom:6px}
+.stat-bar-wrap{background:var(--color-background-secondary);border-radius:4px;height:5px;overflow:hidden}
+.stat-bar{height:100%;border-radius:4px;background:#4CA548}
+.stat-pct{font-size:12px;color:#4CA548;font-weight:600;margin-top:4px}
+
+/* ── MOBILE ── */
+.m-wrap{max-width:300px;margin:0 auto}
+
+/* Métricas arriba — pill row estática */
+.m-metrics{display:flex;gap:8px;margin-bottom:16px}
+.m-metric{flex:1;background:var(--color-background-primary);border-radius:10px;padding:10px 12px;border:0.5px solid var(--color-border-tertiary);text-align:center}
+.m-metric-num{font-size:18px;font-weight:700;color:#4CA548;line-height:1}
+.m-metric-stars{display:flex;gap:1px;justify-content:center;margin-top:2px}
+.m-metric-stars span{color:#4CA548;font-size:9px}
+.m-metric-lbl{font-size:9px;color:#6B7280;margin-top:3px;line-height:1.3}
+.m-metric-bar-wrap{height:4px;background:var(--color-background-secondary);border-radius:2px;overflow:hidden;margin-top:4px}
+.m-metric-bar{height:100%;background:#4CA548;border-radius:2px;width:96%}
+
+/* Card mobile — altura fija igual que desktop */
+.m-card{background:var(--color-background-primary);border-radius:20px;padding:20px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+.m-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--card-color,#4CA548)}
+.m-card-stars{display:flex;gap:3px;margin-bottom:8px}
+.m-card-stars span{color:#4CA548;font-size:12px}
+.m-card-quote{font-size:22px;color:#4CA548;opacity:0.2;font-family:Georgia,serif;line-height:1;margin-bottom:6px}
+
+/* Misma altura fija basada en 3 líneas */
+.m-text-zone{height:72px;overflow:hidden;display:flex;align-items:flex-start}
+.m-text{font-size:13px;color:#2D2147;line-height:1.65;font-style:italic;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;animation:textIn .3s ease}
+
+.m-divider{height:0.5px;background:var(--color-border-tertiary);margin:14px 0}
+.m-reviewer{display:flex;align-items:center;gap:10px}
+.m-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;transition:background .3s}
+.m-rinfo{display:flex;flex-direction:column;gap:1px}
+.m-rname{font-size:12px;font-weight:600;color:#2D2147}
+.m-rmeta{font-size:10px;color:#6B7280}
+.m-rtime{font-size:9px;color:#4CA548;font-weight:500;margin-top:1px}
+
+.m-nav{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.m-dots{display:flex;gap:5px}
+.m-dot{width:5px;height:5px;border-radius:50%;background:var(--color-border-tertiary);cursor:pointer;border:none;padding:0;transition:all .2s}
+.m-dot.active{width:14px;border-radius:3px;background:#4CA548}
+.m-counter{font-size:10px;color:#6B7280}
+.m-btns{display:flex;gap:5px}
+.m-btn{width:26px;height:26px;border-radius:50%;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);cursor:pointer;font-size:11px;color:#2D2147;display:flex;align-items:center;justify-content:center}
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">LO QUE DICEN LOS HOGARES</div>
+  <div class="sec-title">"Por fin, <span>¡separar tiene sentido!"</span></div>
+
+  <!-- DESKTOP -->
+  <div class="frame">
+    <div class="frame-label">🖥 Desktop</div>
+    <div class="d-grid">
+      <div>
+        <div class="review-card">
+          <div class="card-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <div class="card-quote">"</div>
+          <!-- Zona de texto con altura fija — máximo 3 líneas -->
+          <div class="card-text-zone">
+            <div class="card-text" id="d-text">Lo que más me gustó fue saber el nombre del reciclador. Eso cambia todo.</div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="card-reviewer">
+            <div class="avatar" id="d-av" style="background:#F26A2C">AR</div>
+            <div class="reviewer-info">
+              <span class="r-name" id="d-name">Andrés R.</span>
+              <span class="r-meta" id="d-meta">Metropolitan, Palermo</span>
+              <span class="r-time" id="d-time">8 meses con resi</span>
+            </div>
+          </div>
+        </div>
+        <div class="prog-zone">
+          <div class="prog-track"><div class="prog-fill" id="d-fill"></div></div>
+          <div class="ctrl-row">
+            <div class="c-dots">
+              <button class="c-dot active" onclick="dGo(0)"></button>
+              <button class="c-dot" onclick="dGo(1)"></button>
+              <button class="c-dot" onclick="dGo(2)"></button>
+              <button class="c-dot" onclick="dGo(3)"></button>
+            </div>
+            <div class="c-btns">
+              <button class="c-btn" onclick="dGo(dI-1)">←</button>
+              <button class="c-btn" onclick="dGo(dI+1)">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Columna derecha estática -->
+      <div class="stats-col">
+        <div class="stat-card" style="text-align:center">
+          <div class="stat-num">4.9</div>
+          <div class="stat-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <div class="stat-lbl">valoración promedio de todos los hogares resi</div>
+        </div>
+        <div class="stat-card">
+          <div class="bar-lbl">Hogares que recomendarían resi</div>
+          <div class="stat-bar-wrap"><div class="stat-bar" style="width:96%"></div></div>
+          <div class="stat-pct">96%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE -->
+  <div class="frame">
+    <div class="frame-label">📱 Mobile</div>
+    <div class="m-wrap">
+      <!-- Métricas estáticas arriba en dos pills -->
+      <div class="m-metrics">
+        <div class="m-metric">
+          <div class="m-metric-num">4.9</div>
+          <div class="m-metric-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <div class="m-metric-lbl">valoración promedio</div>
+        </div>
+        <div class="m-metric">
+          <div class="m-metric-num">96%</div>
+          <div class="m-metric-bar-wrap"><div class="m-metric-bar"></div></div>
+          <div class="m-metric-lbl">recomendarían resi</div>
+        </div>
+      </div>
+      <!-- Card con altura fija -->
+      <div class="m-card" id="m-card" style="--card-color:#F26A2C">
+        <div class="m-card-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <div class="m-card-quote">"</div>
+        <div class="m-text-zone">
+          <div class="m-text" id="m-text">Lo que más me gustó fue saber el nombre del reciclador. Eso cambia todo.</div>
+        </div>
+        <div class="m-divider"></div>
+        <div class="m-reviewer">
+          <div class="m-avatar" id="m-av" style="background:#F26A2C">AR</div>
+          <div class="m-rinfo">
+            <span class="m-rname" id="m-name">Andrés R.</span>
+            <span class="m-rmeta" id="m-meta">Metropolitan, Palermo</span>
+            <span class="m-rtime" id="m-time">8 meses con resi</span>
+          </div>
+        </div>
+      </div>
+      <div class="m-nav">
+        <div class="m-dots">
+          <button class="m-dot active" onclick="mGo(0)"></button>
+          <button class="m-dot" onclick="mGo(1)"></button>
+          <button class="m-dot" onclick="mGo(2)"></button>
+          <button class="m-dot" onclick="mGo(3)"></button>
+        </div>
+        <span class="m-counter" id="m-cnt">1 / 4</span>
+        <div class="m-btns">
+          <button class="m-btn" onclick="mGo(mI-1)">←</button>
+          <button class="m-btn" onclick="mGo(mI+1)">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const reviews=[
+  {text:"Lo que más me gustó fue saber el nombre del reciclador. Eso cambia todo.",init:"AR",name:"Andrés R.",meta:"Metropolitan, Palermo",time:"8 meses con resi",color:"#F26A2C"},
+  {text:"Llevaba años separando y nunca sabía si servía de algo. Con resi lo veo en el reporte. Ya no tengo esa duda.",init:"VG",name:"Vanessa G.",meta:"CR6, Puerta del Sol",time:"5 meses con resi",color:"#008ECA"},
+  {text:"En mi edificio no había cultura de reciclaje. Ahora somos 14 hogares y el punto limpio está siempre lleno.",init:"SN",name:"Sandra N.",meta:"Verde Niza, La Sultana",time:"11 meses con resi",color:"#E45DBF"},
+  {text:"Mi hijo de 12 años ya sabe qué va en cada bolsita. Lo hace solo.",init:"LR",name:"Lorena R.",meta:"Villa Carmenza, Manizales",time:"6 meses con resi",color:"#4CA548"}
+];
+
+// DESKTOP
+let dI=0,dP=0,dT;
+const dDots=document.querySelectorAll('.c-dot');
+const dFill=document.getElementById('d-fill');
+function dGo(i){
+  dI=(i+reviews.length)%reviews.length;
+  const r=reviews[dI];
+  document.getElementById('d-text').textContent=r.text;
+  document.getElementById('d-av').textContent=r.init;
+  document.getElementById('d-av').style.background=r.color;
+  document.getElementById('d-name').textContent=r.name;
+  document.getElementById('d-meta').textContent=r.meta;
+  document.getElementById('d-time').textContent=r.time;
+  dDots.forEach((d,j)=>d.classList.toggle('active',j===dI));
+  dReset();
+}
+function dReset(){dP=0;dFill.style.width='0%';clearInterval(dT);dT=setInterval(()=>{dP+=2;dFill.style.width=dP+'%';if(dP>=100)dGo(dI+1);},100);}
+dReset();
+
+// MOBILE
+let mI=0;
+const mDots=document.querySelectorAll('.m-dot');
+function mGo(i){
+  mI=(i+reviews.length)%reviews.length;
+  const r=reviews[mI];
+  document.getElementById('m-text').textContent=r.text;
+  document.getElementById('m-av').textContent=r.init;
+  document.getElementById('m-av').style.background=r.color;
+  document.getElementById('m-card').style.setProperty('--card-color',r.color);
+  document.getElementById('m-name').textContent=r.name;
+  document.getElementById('m-meta').textContent=r.meta;
+  document.getElementById('m-time').textContent=r.time;
+  document.getElementById('m-cnt').textContent=(mI+1)+' / '+reviews.length;
+  mDots.forEach((d,j)=>d.classList.toggle('active',j===mI));
+}
+</script>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>resi · vista mobile</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--resi-bg-soft); font-family: var(--font-body); color: var(--resi-navy); }
+  .wrap {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; gap: 18px; padding: 32px 16px 48px;
+  }
+  .caption {
+    font-family: var(--font-display); font-weight: 700; font-size: 18px;
+    color: var(--resi-navy); text-align: center;
+  }
+  .sub { font-size: 13px; font-weight: 500; color: var(--resi-fg-2); margin-top: 4px; }
+  .phone {
+    width: 390px; max-width: 100%;
+    height: 820px;
+    border-radius: 36px;
+    background: #fff;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    border: 1px solid var(--resi-line);
+  }
+  .phone iframe {
+    width: 390px; height: 820px; border: 0; display: block;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="caption">Vista mobile · 390 px
+    <div class="sub">Impacto — hogares</div>
+  </div>
+  <div class="phone">
+    <iframe id="frame" src="index.html#hogares" title="resi mobile"></iframe>
+  </div>
+</div>
+<script>
+  const frame = document.getElementById('frame');
+  frame.addEventListener('load', () => {
+    // Give the SPA a moment to mount, then scroll to the stepper.
+    setTimeout(() => {
+      try {
+        const w = frame.contentWindow;
+        if (w && typeof w.scrollToSection === 'function') w.scrollToSection('impacto');
+      } catch (e) { /* same-origin only */ }
+    }, 700);
+  });
+</script>
+</body>
+</html>

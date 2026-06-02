@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>resi — Preguntas frecuentes para administradores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-100: #E1F5EE;
+      --green-400: #1D9E75;
+      --green-600: #0F6E56;
+      --green-800: #085041;
+      --stone-50:  #F7F6F2;
+      --stone-100: #EDECE6;
+      --stone-300: #C8C6BC;
+      --stone-500: #8A8880;
+      --stone-800: #2C2C2A;
+      --stone-900: #1A1A18;
+      --white: #FFFFFF;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--stone-900);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .faq-section {
+      padding: 96px 24px 112px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .faq-header { margin-bottom: 64px; }
+
+    .faq-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-600);
+      margin-bottom: 20px;
+    }
+
+    .faq-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--green-400);
+      border-radius: 2px;
+    }
+
+    .faq-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--stone-900);
+      letter-spacing: -0.02em;
+      max-width: 560px;
+    }
+
+    .faq-headline em {
+      font-style: italic;
+      color: var(--green-600);
+    }
+
+    .faq-subhead {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--stone-500);
+      max-width: 480px;
+    }
+
+    .faq-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .faq-tab {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 18px;
+      border-radius: 100px;
+      border: 1px solid var(--stone-300);
+      background: transparent;
+      color: var(--stone-500);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      outline: none;
+    }
+
+    .faq-tab:hover {
+      border-color: var(--green-400);
+      color: var(--green-600);
+    }
+
+    .faq-tab.active {
+      background: var(--green-400);
+      border-color: var(--green-400);
+      color: var(--white);
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--stone-100);
+    }
+
+    .faq-item { border-bottom: 1px solid var(--stone-100); overflow: hidden; }
+    .faq-item[data-category] { display: none; }
+    .faq-item.visible { display: block; }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--stone-900);
+      line-height: 1.4;
+      transition: color 0.15s ease;
+    }
+
+    .faq-question:hover { color: var(--green-600); }
+    .faq-question.open { color: var(--green-600); }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--stone-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      transition: all 0.2s ease;
+    }
+
+    .faq-question.open .faq-icon {
+      background: var(--green-400);
+      border-color: var(--green-400);
+      transform: rotate(45deg);
+    }
+
+    .faq-icon svg {
+      width: 12px;
+      height: 12px;
+      stroke: var(--stone-500);
+      transition: stroke 0.2s ease;
+    }
+
+    .faq-question.open .faq-icon svg { stroke: var(--white); }
+
+    .faq-answer-wrap {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.28s ease;
+    }
+
+    .faq-answer-wrap.open { grid-template-rows: 1fr; }
+    .faq-answer-inner { overflow: hidden; }
+
+    .faq-answer {
+      padding-bottom: 28px;
+      padding-right: 48px;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--stone-500);
+    }
+
+    .faq-answer strong { font-weight: 500; color: var(--stone-800); }
+
+    .faq-answer a {
+      color: var(--green-600);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .faq-cat-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--green-600);
+      background: var(--green-100);
+      border-radius: 100px;
+      padding: 3px 10px;
+      margin-bottom: 6px;
+    }
+
+    .faq-empty {
+      display: none;
+      padding: 40px 0;
+      font-size: 15px;
+      color: var(--stone-500);
+    }
+
+    .faq-empty a { color: var(--green-600); text-decoration: underline; }
+
+    .faq-cta {
+      margin-top: 64px;
+      padding: 40px;
+      background: var(--stone-50);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .faq-cta-text p:first-child {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--stone-900);
+      margin-bottom: 4px;
+    }
+
+    .faq-cta-text p:last-child {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--stone-500);
+    }
+
+    .faq-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--green-400);
+      color: var(--white);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .faq-cta-btn:hover { background: var(--green-600); }
+    .faq-cta-btn svg { width: 14px; height: 14px; stroke: var(--white); }
+  </style>
+</head>
+<body>
+
+<section class="faq-section">
+
+  <div class="faq-header">
+    <p class="faq-eyebrow">Para administradores</p>
+    <h2 class="faq-headline">Todo lo que necesitas<br>saber antes de <em>activar resi</em></h2>
+    <p class="faq-subhead">Resolvemos las dudas más frecuentes de los administradores que están evaluando si resi es la decisión correcta para su edificio.</p>
+  </div>
+
+  <div class="faq-tabs" role="tablist">
+    <button class="faq-tab active" data-filter="all" role="tab" aria-selected="true">Todas</button>
+    <button class="faq-tab" data-filter="instalacion" role="tab" aria-selected="false">Instalación</button>
+    <button class="faq-tab" data-filter="recoleccion" role="tab" aria-selected="false">Recolección</button>
+    <button class="faq-tab" data-filter="comunidad" role="tab" aria-selected="false">Comunidad</button>
+    <button class="faq-tab" data-filter="planes" role="tab" aria-selected="false">Planes y pagos</button>
+    <button class="faq-tab" data-filter="impacto" role="tab" aria-selected="false">Impacto y tarifa</button>
+  </div>
+
+  <div class="faq-list">
+
+    <!-- Instalación -->
+    <div class="faq-item visible" data-category="instalacion">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Instalación</span><br>
+          ¿Cuánto tiempo tarda la instalación del Punto Limpio?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">La instalación toma <strong>entre uno y dos días hábiles</strong> dependiendo del plan y del tamaño del cuarto de residuos. Nuestro equipo coordina contigo el horario para no interrumpir la operación del edificio. No necesitas hacer adecuaciones previas — nosotros evaluamos el espacio y ajustamos la distribución.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="instalacion">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Instalación</span><br>
+          ¿El edificio necesita tener un cuarto de residuos para instalar resi?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">No necesariamente un cuarto formal. Trabajamos con el espacio disponible — puede ser <strong>una zona delimitada en el garaje, el hall de entrada o un área de servicio</strong>. En la visita de diagnóstico evaluamos la mejor ubicación según el flujo del edificio y la seguridad de los residentes.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="instalacion">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Instalación</span><br>
+          ¿Qué pasa con el resiBote si el edificio cancela el servicio?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">El resiBote es tuyo una vez pagada la instalación. Si cancelas el servicio, <strong>el equipo queda en el edificio</strong> — es una inversión en infraestructura, no un préstamo. Lo que termina es la recolección, los reportes y el acompañamiento. Muchos edificios que han pausado el servicio mantienen el resiBote para retomarlo más adelante.</div>
+      </div></div>
+    </div>
+
+    <!-- Recolección -->
+    <div class="faq-item visible" data-category="recoleccion">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Recolección</span><br>
+          ¿Con qué frecuencia recoge resi los residuos del edificio?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Depende del plan. El plan Base tiene <strong>recolección quincenal</strong>. Los planes Plus y Pro tienen <strong>recolección a demanda</strong> — cuando el Punto Limpio alcanza su capacidad, el reciclador aliado coordina el retiro. Siempre hay un plan de contingencia activo si el recolector habitual no puede asistir.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="recoleccion">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Recolección</span><br>
+          ¿Quién es el reciclador que viene al edificio?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Es un <strong>reciclador de oficio verificado y aliado de resi</strong>, identificado con carné y conocido por nombre en la app. No es un desconocido — es alguien que el edificio puede reconocer con el tiempo. Este modelo garantiza dignidad en el proceso y seguridad para la comunidad: nunca hay manipulación directa de residuos sin identificación.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="recoleccion">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Recolección</span><br>
+          ¿Qué pasa si el reciclador no puede venir un día?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Todos los planes incluyen un <strong>plan de contingencia ante inasistencia del recolector habitual</strong>. resi activa un recolector de reemplazo para que la recolección no se interrumpa. El edificio recibe notificación del cambio. La garantía de recolección es parte del servicio — no una promesa informal.</div>
+      </div></div>
+    </div>
+
+    <!-- Comunidad -->
+    <div class="faq-item visible" data-category="comunidad">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Comunidad</span><br>
+          ¿Cómo logra resi que los vecinos realmente reciclen?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">El sistema está diseñado para reducir la fricción al máximo. Cada hogar tiene un <strong>minicontenedor en la cocina</strong> que hace la separación fácil y sin excusas. Pero la clave es la motivación: cada mes los hogares reciben su reporte de impacto — cuánto reciclaron, a quién le entregaron, cuánto más podría lograr el edificio. Ver el resultado propio y compararlo con el del edificio activa la participación de forma sostenida.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="comunidad">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Comunidad</span><br>
+          ¿Qué pasa si solo algunos hogares quieren participar?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">resi funciona desde el primer hogar que participa. <strong>No necesitas el 100% de la participación para arrancar</strong> — de hecho, así empieza la mayoría de edificios. El sistema está diseñado para crecer: a medida que más hogares ven el impacto de sus vecinos, se van sumando. La experiencia del Punto Limpio ordenado y los reportes mensuales hacen el trabajo de convencer a los indecisos.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="comunidad">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Comunidad</span><br>
+          ¿Cómo le comunico esto a mi comunidad?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">resi te da las herramientas para hacerlo. Una vez confirmas la instalación, te entregamos <strong>material de comunicación listo para compartir</strong> — mensajes para el grupo de WhatsApp del edificio, cartelería para el cuarto de residuos y un resumen explicativo para presentar en asamblea si lo necesitas. No tienes que explicar el sistema desde cero: nosotros te damos el guión.</div>
+      </div></div>
+    </div>
+
+    <!-- Planes y pagos -->
+    <div class="faq-item visible" data-category="planes">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Planes y pagos</span><br>
+          ¿Quién paga la suscripción — el edificio o cada hogar?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">La suscripción mensual del Punto Limpio la paga <strong>la copropiedad como servicio del edificio</strong> — igual que el contrato de aseo o vigilancia. Es un costo único para el edificio que beneficia a todos los hogares. Los hogares que quieren la experiencia completa en casa (resiCubo) tienen su propia suscripción individual opcional, separada del costo del edificio.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="planes">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Planes y pagos</span><br>
+          ¿Puedo cancelar el servicio cuando quiera?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Sí. En el plan mensual puedes cancelar en cualquier momento sin penalización. El plan anual incluye <strong>2 meses gratis</strong>; si cancelas antes del año, te devolvemos el proporcional de los meses no utilizados. El resiBote instalado queda en el edificio en cualquier caso — es tuyo desde el momento de la instalación.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="planes">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Planes y pagos</span><br>
+          ¿Puedo cambiar de plan después de instalado?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Sí, en cualquier momento. Si subes de plan, resi hace los ajustes necesarios al Punto Limpio —más categorías, rediseño del espacio— en una visita de actualización. <strong>El cambio aplica desde el siguiente ciclo de facturación</strong>. Varios edificios empiezan con el plan Base y suben al Pro una vez que ven el compromiso de su comunidad.</div>
+      </div></div>
+    </div>
+
+    <!-- Impacto y tarifa -->
+    <div class="faq-item visible" data-category="impacto">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Impacto y tarifa</span><br>
+          ¿Cómo funciona el descuento en la tarifa de aseo?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">En Colombia, las copropiedades que formalizan su reciclaje pueden acceder a la <strong>tarifa multiusuario</strong>, que reduce el componente de manejo de residuos hasta en un 50%. Para aplicar, el edificio necesita demostrar una tasa de reciclaje sostenida y presentar reportes verificables ante la empresa de aseo. resi genera exactamente esa documentación mes a mes — los datos que necesitas para hacer la solicitud.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="impacto">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Impacto y tarifa</span><br>
+          ¿Cuánto tiempo tarda el edificio en poder aplicar al descuento?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Depende de la tasa de participación del edificio. En general, los edificios necesitan <strong>entre 3 y 6 meses de datos consistentes</strong> para tener un historial sólido que respalde la solicitud. resi te muestra en la plataforma cuánto falta para llegar al umbral de aprovechamiento que exige la empresa de aseo — así sabes exactamente cuándo estás listo para aplicar.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="impacto">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Impacto y tarifa</span><br>
+          ¿Cómo sé cuánto está reciclando mi edificio cada mes?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Todos los planes incluyen un <strong>reporte mensual del edificio</strong> con kilos reciclados, tasa de aprovechamiento y evolución respecto al mes anterior. Los planes Plus y Pro incluyen además el desglose por categoría y la proyección de impacto. En el plan Pro, una versión resumida llega directamente a los hogares vía cartelería y WhatsApp — para que toda la comunidad vea el progreso.</div>
+      </div></div>
+    </div>
+
+  </div>
+
+  <div class="faq-empty" id="faqEmpty">
+    No hay preguntas en esta categoría todavía. <a href="#">Escríbenos la tuya →</a>
+  </div>
+
+  <div class="faq-cta">
+    <div class="faq-cta-text">
+      <p>¿Tienes una pregunta que no está aquí?</p>
+      <p>Escríbenos. Respondemos en menos de 24 horas.</p>
+    </div>
+    <a href="mailto:hola@resi.co" class="faq-cta-btn">
+      Escríbenos
+      <svg viewBox="0 0 14 14" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 7h10M8 3l4 4-4 4"/>
+      </svg>
+    </a>
+  </div>
+
+</section>
+
+<script>
+  const tabs = document.querySelectorAll('.faq-tab');
+  const items = document.querySelectorAll('.faq-item');
+  const empty = document.getElementById('faqEmpty');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      const filter = tab.dataset.filter;
+      let visible = 0;
+
+      items.forEach(item => {
+        const show = filter === 'all' || item.dataset.category === filter;
+        item.classList.toggle('visible', show);
+        if (show) visible++;
+
+        if (!show) {
+          const btn = item.querySelector('.faq-question');
+          const wrap = item.querySelector('.faq-answer-wrap');
+          btn.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          wrap.classList.remove('open');
+        }
+      });
+
+      empty.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const wrap = btn.nextElementSibling;
+      const isOpen = btn.classList.contains('open');
+
+      document.querySelectorAll('.faq-question.open').forEach(openBtn => {
+        openBtn.classList.remove('open');
+        openBtn.setAttribute('aria-expanded', 'false');
+        openBtn.nextElementSibling.classList.remove('open');
+      });
+
+      if (!isOpen) {
+        btn.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        wrap.classList.add('open');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

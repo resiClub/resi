@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>resi — Preguntas frecuentes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-100: #E1F5EE;
+      --green-400: #1D9E75;
+      --green-600: #0F6E56;
+      --green-800: #085041;
+      --stone-50:  #F7F6F2;
+      --stone-100: #EDECE6;
+      --stone-300: #C8C6BC;
+      --stone-500: #8A8880;
+      --stone-800: #2C2C2A;
+      --stone-900: #1A1A18;
+      --white: #FFFFFF;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--stone-900);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Section wrapper ── */
+    .faq-section {
+      padding: 96px 24px 112px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .faq-header {
+      margin-bottom: 64px;
+    }
+
+    .faq-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-600);
+      margin-bottom: 20px;
+    }
+
+    .faq-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--green-400);
+      border-radius: 2px;
+    }
+
+    .faq-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--stone-900);
+      letter-spacing: -0.02em;
+      max-width: 560px;
+    }
+
+    .faq-headline em {
+      font-style: italic;
+      color: var(--green-600);
+    }
+
+    .faq-subhead {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--stone-500);
+      max-width: 480px;
+    }
+
+    /* ── Category tabs ── */
+    .faq-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .faq-tab {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 18px;
+      border-radius: 100px;
+      border: 1px solid var(--stone-300);
+      background: transparent;
+      color: var(--stone-500);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      outline: none;
+    }
+
+    .faq-tab:hover {
+      border-color: var(--green-400);
+      color: var(--green-600);
+    }
+
+    .faq-tab.active {
+      background: var(--green-400);
+      border-color: var(--green-400);
+      color: var(--white);
+    }
+
+    /* ── FAQ list ── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--stone-100);
+    }
+
+    /* ── FAQ item ── */
+    .faq-item {
+      border-bottom: 1px solid var(--stone-100);
+      overflow: hidden;
+    }
+
+    .faq-item[data-category] {
+      display: none;
+    }
+
+    .faq-item.visible {
+      display: block;
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--stone-900);
+      line-height: 1.4;
+      transition: color 0.15s ease;
+    }
+
+    .faq-question:hover { color: var(--green-600); }
+
+    .faq-question.open { color: var(--green-600); }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--stone-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+      transition: all 0.2s ease;
+    }
+
+    .faq-question.open .faq-icon {
+      background: var(--green-400);
+      border-color: var(--green-400);
+      transform: rotate(45deg);
+    }
+
+    .faq-icon svg {
+      width: 12px;
+      height: 12px;
+      stroke: var(--stone-500);
+      transition: stroke 0.2s ease;
+    }
+
+    .faq-question.open .faq-icon svg { stroke: var(--white); }
+
+    .faq-answer-wrap {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.28s ease;
+    }
+
+    .faq-answer-wrap.open {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-answer-inner {
+      overflow: hidden;
+    }
+
+    .faq-answer {
+      padding-bottom: 28px;
+      padding-right: 48px;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--stone-500);
+    }
+
+    .faq-answer strong {
+      color: var(--stone-800);
+      font-weight: 500;
+    }
+
+    .faq-answer a {
+      color: var(--green-600);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── Category label inside item ── */
+    .faq-cat-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green-600);
+      background: var(--green-100);
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+
+    /* ── CTA block ── */
+    .faq-cta {
+      margin-top: 64px;
+      padding: 40px 48px;
+      background: var(--stone-50);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .faq-cta-text p:first-child {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--stone-900);
+      margin-bottom: 6px;
+    }
+
+    .faq-cta-text p:last-child {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--stone-500);
+    }
+
+    .faq-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 14px 28px;
+      background: var(--stone-900);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: background 0.18s ease, transform 0.1s ease;
+    }
+
+    .faq-cta-btn:hover { background: var(--green-800); }
+    .faq-cta-btn:active { transform: scale(0.98); }
+
+    .faq-cta-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+    }
+
+    /* ── No results ── */
+    .faq-empty {
+      display: none;
+      padding: 48px 0;
+      text-align: center;
+      font-size: 15px;
+      color: var(--stone-500);
+      font-weight: 300;
+    }
+
+    @media (max-width: 600px) {
+      .faq-section { padding: 64px 20px 80px; }
+      .faq-answer { padding-right: 0; }
+      .faq-cta { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<section class="faq-section" id="preguntas">
+
+  <!-- Header -->
+  <div class="faq-header">
+    <div class="faq-eyebrow">Resolvemos tus dudas</div>
+    <h2 class="faq-headline">Las preguntas que<br>nadie hace <em>en voz alta.</em></h2>
+    <p class="faq-subhead">Todo lo que necesitas saber antes de unirte. Si no encuentras lo que buscas, escríbenos.</p>
+  </div>
+
+  <!-- Category tabs -->
+  <div class="faq-tabs" role="tablist" aria-label="Categorías de preguntas">
+    <button class="faq-tab active" data-filter="all" role="tab" aria-selected="true">Todas</button>
+    <button class="faq-tab" data-filter="sistema" role="tab" aria-selected="false">El sistema resi</button>
+    <button class="faq-tab" data-filter="producto" role="tab" aria-selected="false">Productos</button>
+    <button class="faq-tab" data-filter="planes" role="tab" aria-selected="false">Planes y pagos</button>
+    <button class="faq-tab" data-filter="impacto" role="tab" aria-selected="false">Impacto real</button>
+    <button class="faq-tab" data-filter="logistica" role="tab" aria-selected="false">Logística</button>
+  </div>
+
+  <!-- FAQ list -->
+  <div class="faq-list" id="faqList">
+
+    <!-- Sistema resi -->
+    <div class="faq-item visible" data-category="sistema">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">El sistema resi</span><br>
+          ¿Cómo sé que el reciclador realmente recibe lo que separo?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Cada entrega queda registrada. En tu <strong>reporte mensual</strong> ves cuántos kilos salieron de tu edificio, a qué reciclador fueron y en qué centro de acopio llegaron. No hay promesas —hay datos. Y el reciclador también lo confirma desde su lado.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="sistema">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">El sistema resi</span><br>
+          ¿Esto no es lo mismo que poner bolsas de colores?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">No. Las bolsas de colores separan, pero <strong>no garantizan el destino</strong>. resi controla toda la cadena: desde el cubo en tu cocina hasta la entrega directa al reciclador. Esa última parte —la que más importa— es exactamente lo que el sistema convencional no resuelve.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="sistema">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">El sistema resi</span><br>
+          ¿Funciona si mi edificio no está inscrito con resi?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Puedes empezar tú solo. El resiCubo vive en tu cocina y las resiBags las llevas al <strong>punto de entrega más cercano</strong>. Muchos hogares arrancan así y después contagian al edificio. Si quieres que tu administrador se una, te ayudamos a presentarle la propuesta.</div>
+      </div></div>
+    </div>
+
+    <!-- Producto -->
+    <div class="faq-item visible" data-category="producto">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Productos</span><br>
+          ¿El resiCubo cabe en mi cocina?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">El <strong>resiCubo Base</strong> (20L · 40cm de alto) cabe en la mayoría de cocinas, incluso en apartamentos pequeños. El resiCubo Plus (30L · 60cm) tiene base retráctil y se instala escondido en un cajón. Si tienes dudas sobre el espacio, cuéntanos las medidas y te ayudamos a elegir.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="producto">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Productos</span><br>
+          ¿Qué pasa cuando se me acaban las resiBags?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Puedes pedir <strong>resiBags adicionales desde la app</strong> sin cambiar de plan. Si ves que un mes generas más de lo habitual, las pedís puntualmente. Si siempre te quedas corto, te avisamos cuándo tiene sentido subir al siguiente plan.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="producto">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Productos</span><br>
+          ¿Las resiBags son de un solo uso?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Son <strong>reciclables y de materiales recuperados</strong>. Una vez que las entregas en el punto limpio, el reciclador las procesa junto con el resto del material. No terminan en el relleno —hacen parte del ciclo que estás cerrando.</div>
+      </div></div>
+    </div>
+
+    <!-- Planes y pagos -->
+    <div class="faq-item visible" data-category="planes">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Planes y pagos</span><br>
+          ¿Puedo cancelar cuando quiera?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Sí. Si estás en el plan mensual, puedes cancelar en cualquier momento sin penalización. El plan anual tiene <strong>2 meses de ahorro incluidos</strong>; si cancelas antes, te devolvemos el proporcional de los meses no utilizados.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="planes">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Planes y pagos</span><br>
+          ¿Qué incluye el precio mensual exactamente?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">El precio cubre el <strong>resiCubo, las resiBags del mes, la recolección, la entrega al reciclador y tu reporte de impacto</strong>. En los planes Plus y Pro también incluye instalación y resiTips semanales. No hay cobros ocultos ni tarifas de envío adicionales.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="planes">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Planes y pagos</span><br>
+          ¿Puedo cambiar de plan después de inscribirme?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Sí, en cualquier momento desde la app. Si subes de plan, el cambio aplica desde el siguiente ciclo y te ajustamos el equipo si es necesario. Si bajas, también —aunque casi nadie lo hace una vez que ve el impacto del plan Pro.</div>
+      </div></div>
+    </div>
+
+    <!-- Impacto real -->
+    <div class="faq-item visible" data-category="impacto">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Impacto real</span><br>
+          ¿Cómo se mide lo que reciclo cada mes?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Cada resiBag tiene un <strong>peso promedio por categoría</strong> registrado en el sistema. Cuando el reciclador las recibe, confirma la entrega y se suman al reporte de tu hogar. Al final del mes recibes un resumen con kilos reciclados, equivalencia ambiental y el nombre del reciclador que los recibió.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="impacto">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Impacto real</span><br>
+          ¿Qué residuos acepta resi?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">El sistema maneja <strong>5 categorías</strong>: plástico, papel y cartón, vidrio, metal y multilaminados. El plan Pro también incluye restos de comida a través del miniCubo. Lo que no entra en estas categorías —como electrónicos o ropa— te indicamos a dónde llevarlo.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="impacto">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Impacto real</span><br>
+          ¿Los residuos realmente no pasan por el camión de basura?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Correcto. Las resiBags salen del edificio por una <strong>ruta paralela al sistema de basura convencional</strong>, directamente a manos del reciclador aliado. Nunca comparten el camión, nunca se mezclan. Eso es precisamente lo que hace diferente a resi.</div>
+      </div></div>
+    </div>
+
+    <!-- Logística -->
+    <div class="faq-item visible" data-category="logistica">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Logística</span><br>
+          ¿Qué pasa si me mudo?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">Tu suscripción va contigo. Nos avisas, <strong>actualizamos tu punto de entrega</strong> y sigues reciclando sin interrupciones. El resiCubo se mueve fácil —es tuyo y va donde tú vayas.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="logistica">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Logística</span><br>
+          ¿Con qué frecuencia recogen las resiBags del edificio?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">La recolección se coordina según el volumen del edificio, generalmente <strong>una o dos veces por semana</strong>. En edificios con resiBot activo recibes notificación cuando el nivel está alto y cuando ya fue recogido. Siempre hay alguien al tanto.</div>
+      </div></div>
+    </div>
+
+    <div class="faq-item visible" data-category="logistica">
+      <button class="faq-question" aria-expanded="false">
+        <span>
+          <span class="faq-cat-badge">Logística</span><br>
+          ¿Qué hago si vivo en una casa, no en un edificio?
+        </span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer-wrap"><div class="faq-answer-inner">
+        <div class="faq-answer">resi funciona para casas también. Separas con el resiCubo, acumulas tus resiBags y las llevas al <strong>punto de entrega resi más cercano</strong>, que puede estar en un edificio aliado o en un punto fijo del barrio. Desde la app ves cuál te queda más cerca.</div>
+      </div></div>
+    </div>
+
+  </div>
+
+  <!-- Empty state -->
+  <div class="faq-empty" id="faqEmpty">
+    No hay preguntas en esta categoría todavía. <a href="#">Escríbenos la tuya →</a>
+  </div>
+
+  <!-- CTA -->
+  <div class="faq-cta">
+    <div class="faq-cta-text">
+      <p>¿Tienes una pregunta que no está aquí?</p>
+      <p>Escríbenos. Respondemos en menos de 24 horas.</p>
+    </div>
+    <a href="mailto:hola@resi.co" class="faq-cta-btn">
+      Escríbenos
+      <svg viewBox="0 0 14 14" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 7h10M8 3l4 4-4 4"/>
+      </svg>
+    </a>
+  </div>
+
+</section>
+
+<script>
+  const tabs = document.querySelectorAll('.faq-tab');
+  const items = document.querySelectorAll('.faq-item');
+  const empty = document.getElementById('faqEmpty');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      const filter = tab.dataset.filter;
+      let visible = 0;
+
+      items.forEach(item => {
+        const show = filter === 'all' || item.dataset.category === filter;
+        item.classList.toggle('visible', show);
+        if (show) visible++;
+
+        if (!show) {
+          const btn = item.querySelector('.faq-question');
+          const wrap = item.querySelector('.faq-answer-wrap');
+          btn.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          wrap.classList.remove('open');
+        }
+      });
+
+      empty.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const wrap = btn.nextElementSibling;
+      const isOpen = btn.classList.contains('open');
+
+      document.querySelectorAll('.faq-question.open').forEach(openBtn => {
+        openBtn.classList.remove('open');
+        openBtn.setAttribute('aria-expanded', 'false');
+        openBtn.nextElementSibling.classList.remove('open');
+      });
+
+      if (!isOpen) {
+        btn.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        wrap.classList.add('open');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

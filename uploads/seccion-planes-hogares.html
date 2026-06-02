@@ -1,0 +1,450 @@
+<!-- SECCIÓN: PLANES — Landing Hogares -->
+<!-- Usar con el sistema de diseño de Resi. Reemplazar variables CSS por los tokens del proyecto. -->
+
+<section class="resi-planes">
+  <div class="resi-planes__inner">
+
+    <!-- Encabezado -->
+    <div class="resi-planes__header">
+      <p class="resi-eyebrow">
+        <span class="resi-eyebrow__dot"></span>
+        Planes para hogares
+      </p>
+      <h2 class="resi-planes__titulo">
+        Más fácil para ti significa<br>
+        <span class="resi-verde">mayor impacto en los demás</span>
+      </h2>
+      <p class="resi-planes__descripcion">
+        Cuidamos los residuos que separaste en el hogar para entregárselos —así, separados— a un reciclador de tu confianza.
+      </p>
+
+      <!-- Toggle mensual / anual -->
+      <div class="resi-planes__toggle" role="group" aria-label="Frecuencia de pago">
+        <button class="resi-toggle__btn resi-toggle__btn--active" id="btn-mensual" onclick="setToggle('mensual')">Mensual</button>
+        <button class="resi-toggle__btn" id="btn-anual" onclick="setToggle('anual')">Anual</button>
+      </div>
+      <p class="resi-planes__ahorro" id="ahorro-label">
+        <span class="resi-planes__ahorro-icono">♻</span>
+        2 meses gratis al pagar anual
+      </p>
+    </div>
+
+    <!-- Tarjetas -->
+    <div class="resi-planes__grid">
+
+      <!-- Plan Base -->
+      <div class="resi-plan-card">
+        <div class="resi-plan-card__top">
+          <div class="resi-plan-card__nombre-row">
+            <img src="" alt="resi logo" class="resi-plan-card__logo" aria-hidden="true"/>
+            <span class="resi-plan-card__nombre">Base</span>
+          </div>
+          <div class="resi-plan-card__precio">
+            <span class="resi-plan-card__monto" data-mensual="$11.900" data-anual="$9.900">$11.900</span>
+            <span class="resi-plan-card__periodo">/mes</span>
+          </div>
+          <p class="resi-plan-card__tagline"><strong>Empieza a reciclar desde tu hogar.</strong></p>
+          <p class="resi-plan-card__subtag">Lo esencial para separar bien desde el primer día.</p>
+        </div>
+        <ul class="resi-plan-card__features">
+          <li><span class="resi-check">✓</span> resiCubo Base (20L · 40cm)</li>
+          <li><span class="resi-check">✓</span> 12 resiBote reciclables al mes</li>
+          <li><span class="resi-check">✓</span> Conoce tu huella</li>
+        </ul>
+        <div class="resi-plan-card__cta">
+          <a href="#" class="resi-btn-outline resi-btn-outline--full">Empezar</a>
+        </div>
+      </div>
+
+      <!-- Plan Plus — destacado -->
+      <div class="resi-plan-card resi-plan-card--destacado">
+        <div class="resi-plan-card__badge">Más popular</div>
+        <div class="resi-plan-card__top">
+          <div class="resi-plan-card__nombre-row">
+            <img src="" alt="resi logo" class="resi-plan-card__logo" aria-hidden="true"/>
+            <span class="resi-plan-card__nombre">Plus</span>
+          </div>
+          <div class="resi-plan-card__precio">
+            <span class="resi-plan-card__monto" data-mensual="$19.900" data-anual="$16.900">$19.900</span>
+            <span class="resi-plan-card__periodo">/mes</span>
+          </div>
+          <p class="resi-plan-card__tagline"><strong>Más capacidad, fuera de tu vista.</strong></p>
+          <p class="resi-plan-card__subtag">Más espacio adentro, el mismo en tu cocina.</p>
+        </div>
+        <ul class="resi-plan-card__features">
+          <li><span class="resi-check">✓</span> resiCubo Plus (30L · 60cm)</li>
+          <li><span class="resi-check">✓</span> 12 resiBote Plus reciclables al mes</li>
+          <li><span class="resi-check">✓</span> Base retráctil — vive escondido en tu cocina</li>
+          <li><span class="resi-check">✓</span> Instalación incluida</li>
+          <li><span class="resi-check">✓</span> Conoce tu huella</li>
+          <li><span class="resi-check">✓</span> resiTips semanales</li>
+        </ul>
+        <div class="resi-plan-card__cta">
+          <a href="#" class="resi-btn-primary resi-btn-primary--full">Empezar</a>
+        </div>
+      </div>
+
+      <!-- Plan Pro -->
+      <div class="resi-plan-card">
+        <div class="resi-plan-card__top">
+          <div class="resi-plan-card__nombre-row">
+            <img src="" alt="resi logo" class="resi-plan-card__logo" aria-hidden="true"/>
+            <span class="resi-plan-card__nombre">Pro</span>
+          </div>
+          <div class="resi-plan-card__precio">
+            <span class="resi-plan-card__monto" data-mensual="$24.900" data-anual="$20.900">$24.900</span>
+            <span class="resi-plan-card__periodo">/mes</span>
+          </div>
+          <p class="resi-plan-card__tagline"><strong>Para ir un paso más allá.</strong></p>
+          <p class="resi-plan-card__subtag">Suma residuos de comida y el doble de bags.</p>
+        </div>
+        <ul class="resi-plan-card__features">
+          <li><span class="resi-check">✓</span> resiCubo Plus (30L · 60cm)</li>
+          <li><span class="resi-check">✓</span> 20 resiBote Plus reciclables al mes</li>
+          <li><span class="resi-check">✓</span> miniCubo para restos de comida</li>
+          <li><span class="resi-check">✓</span> Base retráctil — vive escondido en tu cocina</li>
+          <li><span class="resi-check">✓</span> Instalación incluida</li>
+          <li><span class="resi-check">✓</span> Conoce tu huella</li>
+          <li><span class="resi-check">✓</span> resiTips semanales</li>
+        </ul>
+        <div class="resi-plan-card__cta">
+          <a href="#" class="resi-btn-outline resi-btn-outline--full">Empezar</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Tokens — reemplazar por variables del sistema de diseño de Resi ── */
+  :root {
+    --resi-verde: #2E7D32;
+    --resi-verde-claro: #4CAF50;
+    --resi-azul-oscuro: #1A1F4B;
+    --resi-gris-texto: #666;
+    --resi-gris-claro: #F0EDE8;
+    --resi-bg: #F5F0E8;
+    --resi-blanco: #FFFFFF;
+    --resi-borde: #E0DAD0;
+    --resi-radius: 16px;
+    --resi-font: 'DM Sans', sans-serif;
+  }
+
+  /* ── Sección ── */
+  .resi-planes {
+    background-color: var(--resi-bg);
+    padding: 96px 0;
+  }
+
+  .resi-planes__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* ── Encabezado ── */
+  .resi-planes__header {
+    text-align: center;
+    margin-bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* ── Eyebrow ── */
+  .resi-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--resi-font);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--resi-verde);
+    margin: 0;
+  }
+
+  .resi-eyebrow__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--resi-verde);
+    flex-shrink: 0;
+  }
+
+  /* ── Título ── */
+  .resi-planes__titulo {
+    font-family: var(--resi-font);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800;
+    color: var(--resi-azul-oscuro);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .resi-verde { color: var(--resi-verde-claro); }
+
+  .resi-planes__descripcion {
+    font-family: var(--resi-font);
+    font-size: 16px;
+    color: var(--resi-gris-texto);
+    max-width: 560px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Toggle ── */
+  .resi-planes__toggle {
+    display: inline-flex;
+    background: var(--resi-blanco);
+    border: 1.5px solid var(--resi-borde);
+    border-radius: 999px;
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .resi-toggle__btn {
+    font-family: var(--resi-font);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 24px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    color: var(--resi-gris-texto);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .resi-toggle__btn--active {
+    background: var(--resi-blanco);
+    color: var(--resi-azul-oscuro);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  }
+
+  /* ── Label ahorro ── */
+  .resi-planes__ahorro {
+    font-family: var(--resi-font);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--resi-verde);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .resi-planes__ahorro.visible { opacity: 1; }
+
+  /* ── Grid de tarjetas ── */
+  .resi-planes__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;  /* altura uniforme */
+  }
+
+  /* ── Tarjeta base ── */
+  .resi-plan-card {
+    background: var(--resi-blanco);
+    border: 1.5px solid var(--resi-borde);
+    border-radius: var(--resi-radius);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+
+  .resi-plan-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  /* ── Tarjeta destacada ── */
+  .resi-plan-card--destacado {
+    border: 2px solid var(--resi-verde-claro);
+    box-shadow: 0 8px 32px rgba(76,175,80,0.12);
+  }
+
+  .resi-plan-card__badge {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--resi-verde-claro);
+    color: var(--resi-blanco);
+    font-family: var(--resi-font);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ── Contenido tarjeta ── */
+  .resi-plan-card__top {
+    margin-bottom: 24px;
+  }
+
+  .resi-plan-card__nombre-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .resi-plan-card__logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    /* placeholder visual mientras no hay imagen */
+    background: var(--resi-gris-claro);
+    border-radius: 6px;
+  }
+
+  .resi-plan-card__nombre {
+    font-family: var(--resi-font);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--resi-azul-oscuro);
+  }
+
+  .resi-plan-card__precio {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+
+  .resi-plan-card__monto {
+    font-family: var(--resi-font);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--resi-azul-oscuro);
+    line-height: 1;
+  }
+
+  .resi-plan-card__periodo {
+    font-family: var(--resi-font);
+    font-size: 14px;
+    color: var(--resi-gris-texto);
+  }
+
+  .resi-plan-card__tagline {
+    font-family: var(--resi-font);
+    font-size: 14px;
+    color: var(--resi-azul-oscuro);
+    margin: 0 0 4px 0;
+  }
+
+  .resi-plan-card__subtag {
+    font-family: var(--resi-font);
+    font-size: 13px;
+    color: var(--resi-gris-texto);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* ── Lista de features ── */
+  .resi-plan-card__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;  /* empuja el CTA al fondo */
+  }
+
+  .resi-plan-card__features li {
+    font-family: var(--resi-font);
+    font-size: 14px;
+    color: var(--resi-azul-oscuro);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+  }
+
+  .resi-check {
+    color: var(--resi-verde-claro);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── CTA siempre al fondo ── */
+  .resi-plan-card__cta {
+    margin-top: auto;
+  }
+
+  /* ── Botones ── */
+  .resi-btn-outline--full,
+  .resi-btn-primary--full {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px;
+    border-radius: 999px;
+    font-family: var(--resi-font);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    box-sizing: border-box;
+  }
+
+  .resi-btn-outline--full {
+    border: 1.5px solid var(--resi-azul-oscuro);
+    color: var(--resi-azul-oscuro);
+    background: transparent;
+  }
+
+  .resi-btn-outline--full:hover {
+    background: var(--resi-azul-oscuro);
+    color: var(--resi-blanco);
+  }
+
+  .resi-btn-primary--full {
+    background: var(--resi-verde-claro);
+    color: var(--resi-blanco);
+    border: none;
+  }
+
+  .resi-btn-primary--full:hover {
+    background: var(--resi-verde);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .resi-planes__grid {
+      grid-template-columns: 1fr;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+  }
+</style>
+
+<script>
+  function setToggle(modo) {
+    const btnMensual = document.getElementById('btn-mensual');
+    const btnAnual = document.getElementById('btn-anual');
+    const ahorroLabel = document.getElementById('ahorro-label');
+
+    btnMensual.classList.toggle('resi-toggle__btn--active', modo === 'mensual');
+    btnAnual.classList.toggle('resi-toggle__btn--active', modo === 'anual');
+    ahorroLabel.classList.toggle('visible', modo === 'anual');
+
+    document.querySelectorAll('.resi-plan-card__monto').forEach(el => {
+      el.textContent = el.dataset[modo];
+    });
+  }
+
+  // Inicializar label oculto
+  document.getElementById('ahorro-label').classList.remove('visible');
+</script>

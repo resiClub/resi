@@ -1,0 +1,387 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1.5rem 0;font-family:var(--font-sans,-apple-system,sans-serif)}
+.frame{background:var(--color-background-secondary,#F7F7F5);border-radius:16px;border:0.5px solid var(--color-border-tertiary,#E8E8E4);padding:28px;margin-bottom:20px}
+.frame-label{font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-secondary,#6B7280);margin-bottom:20px;display:flex;align-items:center;gap:6px}
+.controls-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px}
+.toggle{background:var(--color-background-primary,#fff);border-radius:100px;padding:3px;display:inline-flex;border:0.5px solid var(--color-border-tertiary,#E8E8E4);box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.toggle-btn{padding:7px 20px;border-radius:100px;font-size:12px;font-weight:500;border:none;cursor:pointer;background:none;color:#6B7280;transition:all .2s}
+.toggle-btn.active{background:#2D2147;color:#fff;box-shadow:0 1px 4px rgba(45,33,71,0.2)}
+.annual-tag{display:inline-flex;align-items:center;gap:5px;background:#F0FAF0;border:0.5px solid rgba(76,165,72,0.3);border-radius:100px;padding:4px 12px;font-size:11px;color:#4CA548;font-weight:500}
+.annual-tag::before{content:'🎁';font-size:10px}
+.segment-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:24px}
+.segment-label{font-size:11px;color:#6B7280;font-weight:500}
+.segment-pills{display:flex;gap:4px;background:var(--color-background-primary,#fff);border-radius:100px;padding:3px;border:0.5px solid var(--color-border-tertiary,#E8E8E4);box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.seg-btn{padding:6px 14px;border-radius:100px;font-size:11px;font-weight:500;border:none;cursor:pointer;background:none;color:#6B7280;transition:all .2s;white-space:nowrap}
+.seg-btn.active{background:#2D2147;color:#fff;box-shadow:0 1px 3px rgba(45,33,71,0.15)}
+.plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:start}
+.plan-card{background:var(--color-background-primary,#fff);border-radius:16px;border:1px solid var(--color-border-tertiary,#E8E8E4);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s}
+.plan-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+.plan-card.featured{border:1.5px solid #4CA548;box-shadow:0 4px 24px rgba(76,165,72,0.12);position:relative}
+.featured-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:#4CA548;color:#fff;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:4px 14px;border-radius:0 0 10px 10px;white-space:nowrap}
+.plan-header{padding:20px 20px 14px}
+.plan-range{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#6B7280;margin-bottom:6px}
+.plan-name{font-size:22px;font-weight:800;margin-bottom:8px;letter-spacing:-0.01em}
+.plan-name.base{color:#008ECA}
+.plan-name.plus{color:#F26A2C}
+.plan-name.pro{color:#4CA548}
+.plan-price-row{display:flex;align-items:baseline;gap:3px;margin-bottom:6px}
+.plan-price{font-size:26px;font-weight:700;color:#2D2147;line-height:1;letter-spacing:-0.02em;transition:all .25s}
+.plan-price-unit{font-size:12px;color:#6B7280;font-weight:400}
+.per-home{display:inline-flex;align-items:center;gap:6px;background:#F5F0E8;border-radius:100px;padding:4px 10px;margin-bottom:8px}
+.per-home-price{font-size:12px;font-weight:700;color:#2D2147}
+.per-home-label{font-size:10px;color:#6B7280}
+.plan-install{font-size:10px;color:#6B7280;margin-bottom:6px;line-height:1.5}
+.plan-tagline{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase}
+.plan-tagline.base{color:#008ECA}
+.plan-tagline.plus{color:#F26A2C}
+.plan-tagline.pro{color:#4CA548}
+.plan-diffs{padding:0 20px 14px;display:flex;flex-direction:column;gap:7px}
+.diff-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#2D2147;line-height:1.4}
+.diff-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.diff-item.muted{color:#9CA3AF}
+.diff-item.muted .diff-dot{background:#E0E0E0!important}
+.plan-divider{height:1px;background:var(--color-border-tertiary,#E8E8E4);margin:0 20px}
+.acc-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:none;border:none;cursor:pointer;font-size:11px;font-weight:500;color:#6B7280;text-align:left;transition:color .2s}
+.acc-trigger:hover{color:#2D2147}
+.acc-body{display:none;padding:0 20px 14px}
+.acc-body.open{display:block}
+.acc-group{margin-bottom:12px}
+.acc-group:last-child{margin-bottom:0}
+.acc-group-title{font-size:10px;font-weight:600;color:#4CA548;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:7px}
+.acc-item{display:flex;align-items:flex-start;gap:7px;font-size:11px;color:#6B7280;line-height:1.5;margin-bottom:4px}
+.acc-check{color:#4CA548;font-size:10px;flex-shrink:0;margin-top:2px;font-weight:700}
+.acc-arrow{font-size:10px;transition:transform .2s;flex-shrink:0;opacity:0.6}
+.plan-cta{padding:14px 20px;margin-top:auto}
+.cta-btn{width:100%;padding:11px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #E8E8E4;background:none;color:#2D2147;transition:all .2s}
+.cta-btn:hover{border-color:#2D2147;background:#2D2147;color:#fff}
+.cta-btn.featured-cta{background:#4CA548;border-color:#4CA548;color:#fff;box-shadow:0 2px 8px rgba(76,165,72,0.25)}
+.cta-btn.featured-cta:hover{background:#3d9440;border-color:#3d9440}
+.footnote{margin-top:16px;padding:12px 16px;background:var(--color-background-primary,#fff);border-radius:10px;border:0.5px solid var(--color-border-tertiary,#E8E8E4)}
+.footnote p{font-size:10px;color:#9CA3AF;line-height:1.6;font-style:italic}
+.footnote p+p{margin-top:4px}
+.m-wrap{max-width:290px;margin:0 auto}
+.m-tabs{display:flex;gap:6px;margin-bottom:14px;justify-content:center}
+.m-tab{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:500;border:0.5px solid var(--color-border-tertiary,#E8E8E4);background:var(--color-background-primary,#fff);color:#6B7280;cursor:pointer;transition:all .2s}
+.m-tab.active.base{background:#008ECA;border-color:#008ECA;color:#fff}
+.m-tab.active.plus{background:#F26A2C;border-color:#F26A2C;color:#fff}
+.m-tab.active.pro{background:#4CA548;border-color:#4CA548;color:#fff}
+.m-plan{display:none}
+.m-plan.active{display:block}
+.m-card{background:var(--color-background-primary,#fff);border-radius:16px;border:1px solid var(--color-border-tertiary,#E8E8E4);overflow:hidden}
+.m-card.featured{border:1.5px solid #4CA548;box-shadow:0 4px 20px rgba(76,165,72,0.1)}
+</style>
+
+<div class="wrap">
+
+<!-- DESKTOP -->
+<div class="frame">
+  <div class="frame-label">🖥 Desktop</div>
+  <div class="controls-wrap">
+    <div class="toggle">
+      <button class="toggle-btn active" id="d-men-btn" onclick="setBilling('mensual')">Mensual</button>
+      <button class="toggle-btn" id="d-anu-btn" onclick="setBilling('anual')">Anual</button>
+    </div>
+    <div id="d-annual-tag" class="annual-tag" style="visibility:hidden">2 meses gratis al pagar anual</div>
+  </div>
+  <div class="segment-wrap">
+    <div class="segment-label">¿Cuántos apartamentos tiene tu edificio?</div>
+    <div class="segment-pills" id="d-segs">
+      <button class="seg-btn active" onclick="setSeg(3,this)">121+ aptos</button>
+      <button class="seg-btn" onclick="setSeg(2,this)">61–120 aptos</button>
+      <button class="seg-btn" onclick="setSeg(1,this)">31–60 aptos</button>
+      <button class="seg-btn" onclick="setSeg(0,this)">1–30 aptos</button>
+    </div>
+  </div>
+  <div class="plans-grid">
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-range" id="d-base-range">121+ HOGARES</div>
+        <div class="plan-name base">Base</div>
+        <div class="plan-price-row"><span class="plan-price" id="d-base-price">$149.900</span><span class="plan-price-unit" id="d-base-unit">/mes</span></div>
+        <div class="per-home"><span class="per-home-price" id="d-base-ph">$833</span><span class="per-home-label">por hogar al mes</span></div>
+        <div class="plan-install" id="d-base-ins">Instalación única: $320.000</div>
+        <div class="plan-tagline base">Empieza a reciclar</div>
+      </div>
+      <div class="plan-diffs">
+        <div class="diff-item"><div class="diff-dot" style="background:#008ECA"></div>Punto Limpio con 6 categorías</div>
+        <div class="diff-item"><div class="diff-dot" style="background:#008ECA"></div>Recolección <strong>quincenal</strong></div>
+        <div class="diff-item"><div class="diff-dot" style="background:#008ECA"></div>Reporte escrito vía WhatsApp</div>
+        <div class="diff-item muted"><div class="diff-dot"></div>Sin rediseño del cuarto de residuos</div>
+      </div>
+      <div class="plan-divider"></div>
+      <button class="acc-trigger" onclick="toggleAcc(this)">Ver todos los beneficios <span class="acc-arrow">▾</span></button>
+      <div class="acc-body">
+        <div class="acc-group"><div class="acc-group-title">Punto Limpio</div><div class="acc-item"><span class="acc-check">✓</span>resiBOTE Base: 6 categorías reciclables</div><div class="acc-item"><span class="acc-check">✓</span>Iluminación automática</div><div class="acc-item"><span class="acc-check">✓</span>Mantenimiento incluido</div></div>
+        <div class="acc-group"><div class="acc-group-title">Recolección garantizada</div><div class="acc-item"><span class="acc-check">✓</span>Frecuencia quincenal</div><div class="acc-item"><span class="acc-check">✓</span>Residuos llegan separados a centros de reciclaje</div><div class="acc-item"><span class="acc-check">✓</span>Plan de contingencia ante inasistencia</div></div>
+        <div class="acc-group"><div class="acc-group-title">Seguimiento y reporte</div><div class="acc-item"><span class="acc-check">✓</span>Reporte mensual escrito: kg reciclados, tasa, evolución mes a mes</div><div class="acc-item"><span class="acc-check">✓</span>resiTips Base — formato textual vía WhatsApp</div></div>
+      </div>
+      <div class="plan-cta"><button class="cta-btn">Activar Base</button></div>
+    </div>
+    <div class="plan-card">
+      <div class="plan-header">
+        <div class="plan-range" id="d-plus-range">121+ HOGARES</div>
+        <div class="plan-name plus">Plus</div>
+        <div class="plan-price-row"><span class="plan-price" id="d-plus-price">$199.900</span><span class="plan-price-unit" id="d-plus-unit">/mes</span></div>
+        <div class="per-home"><span class="per-home-price" id="d-plus-ph">$1.111</span><span class="per-home-label">por hogar al mes</span></div>
+        <div class="plan-install" id="d-plus-ins">Instalación única: $490.000</div>
+        <div class="plan-tagline plus">Más categorías, mayor impacto</div>
+      </div>
+      <div class="plan-diffs">
+        <div class="diff-item"><div class="diff-dot" style="background:#F26A2C"></div>Punto Limpio con 9+3 categorías</div>
+        <div class="diff-item"><div class="diff-dot" style="background:#F26A2C"></div>Recolección <strong>a demanda</strong></div>
+        <div class="diff-item"><div class="diff-dot" style="background:#F26A2C"></div>Rediseño experiencial del cuarto</div>
+        <div class="diff-item"><div class="diff-dot" style="background:#F26A2C"></div>Reporte escrito vía WhatsApp</div>
+      </div>
+      <div class="plan-divider"></div>
+      <button class="acc-trigger" onclick="toggleAcc(this)">Ver todos los beneficios <span class="acc-arrow">▾</span></button>
+      <div class="acc-body">
+        <div class="acc-group"><div class="acc-group-title">Punto Limpio</div><div class="acc-item"><span class="acc-check">✓</span>resiBOTE Plus: 9 categorías + 3 especiales</div><div class="acc-item"><span class="acc-check">✓</span>Rediseño experiencial: redistribución, señalética, iluminación automática</div><div class="acc-item"><span class="acc-check">✓</span>Mantenimiento incluido</div></div>
+        <div class="acc-group"><div class="acc-group-title">Recolección garantizada</div><div class="acc-item"><span class="acc-check">✓</span>Frecuencia a demanda</div><div class="acc-item"><span class="acc-check">✓</span>Residuos llegan separados a centros de reciclaje</div><div class="acc-item"><span class="acc-check">✓</span>Plan de contingencia ante inasistencia</div></div>
+        <div class="acc-group"><div class="acc-group-title">Seguimiento y reporte</div><div class="acc-item"><span class="acc-check">✓</span>Reporte mensual escrito: kg reciclados, tasa, evolución mes a mes</div><div class="acc-item"><span class="acc-check">✓</span>resiTips Base — formato textual vía WhatsApp</div></div>
+      </div>
+      <div class="plan-cta"><button class="cta-btn">Activar Plus</button></div>
+    </div>
+    <div class="plan-card featured">
+      <div class="featured-badge">MÁS POPULAR</div>
+      <div class="plan-header" style="padding-top:26px">
+        <div class="plan-range" id="d-pro-range">121+ HOGARES</div>
+        <div class="plan-name pro">Pro</div>
+        <div class="plan-price-row"><span class="plan-price" id="d-pro-price">$209.900</span><span class="plan-price-unit" id="d-pro-unit">/mes</span></div>
+        <div class="per-home"><span class="per-home-price" id="d-pro-ph">$1.166</span><span class="per-home-label">por hogar al mes</span></div>
+        <div class="plan-install" id="d-pro-ins">Instalación única: $490.000</div>
+        <div class="plan-tagline pro">Muestra fácilmente un mayor impacto</div>
+      </div>
+      <div class="plan-diffs">
+        <div class="diff-item"><div class="diff-dot" style="background:#4CA548"></div>Todo lo del plan Plus</div>
+        <div class="diff-item"><div class="diff-dot" style="background:#4CA548"></div><strong>Reporte mensual gráfico</strong> con proyección</div>
+        <div class="diff-item"><div class="diff-dot" style="background:#4CA548"></div>Comunicado automático a hogares</div>
+        <div class="diff-item"><div class="diff-dot" style="background:#4CA548"></div>resiTips Plus — imágenes y cartelera</div>
+      </div>
+      <div class="plan-divider"></div>
+      <button class="acc-trigger" onclick="toggleAcc(this)">Ver todos los beneficios <span class="acc-arrow">▾</span></button>
+      <div class="acc-body">
+        <div class="acc-group"><div class="acc-group-title">Punto Limpio</div><div class="acc-item"><span class="acc-check">✓</span>resiBOTE Plus: 9 categorías + 3 especiales</div><div class="acc-item"><span class="acc-check">✓</span>Rediseño experiencial completo</div><div class="acc-item"><span class="acc-check">✓</span>Mantenimiento incluido</div></div>
+        <div class="acc-group"><div class="acc-group-title">Recolección garantizada</div><div class="acc-item"><span class="acc-check">✓</span>Frecuencia a demanda</div><div class="acc-item"><span class="acc-check">✓</span>Residuos llegan separados a centros de reciclaje</div><div class="acc-item"><span class="acc-check">✓</span>Plan de contingencia ante inasistencia</div></div>
+        <div class="acc-group"><div class="acc-group-title">Seguimiento y reporte</div><div class="acc-item"><span class="acc-check">✓</span>Reporte mensual gráfico: kg por categoría, proyección de impacto, evolución, a quién le entregas</div><div class="acc-item"><span class="acc-check">✓</span>Versión resumida comunicada automáticamente a hogares</div><div class="acc-item"><span class="acc-check">✓</span>resiTips Plus — imágenes vía WhatsApp y cartelera</div></div>
+      </div>
+      <div class="plan-cta"><button class="cta-btn featured-cta">Activar Pro</button></div>
+    </div>
+  </div>
+  <div class="footnote">
+    <p>* El costo de instalación aplica por cuarto de residuos intervenido. Edificios con múltiples torres o cuartos independientes, consulta condiciones.</p>
+    <p>* Edificios con dos cuartos separados (reciclables / no reciclables) mantienen el mismo costo de instalación.</p>
+  </div>
+</div>
+
+<!-- MOBILE -->
+<div class="frame">
+  <div class="frame-label">📱 Mobile</div>
+  <div class="m-wrap">
+    <div class="controls-wrap">
+      <div class="toggle">
+        <button class="toggle-btn active" id="m-men-btn" onclick="mBilling('mensual')">Mensual</button>
+        <button class="toggle-btn" id="m-anu-btn" onclick="mBilling('anual')">Anual</button>
+      </div>
+      <div id="m-annual-tag" class="annual-tag" style="visibility:hidden">2 meses gratis al pagar anual</div>
+    </div>
+    <div class="segment-wrap">
+      <div class="segment-label">¿Cuántos apartamentos tiene tu edificio?</div>
+      <div class="segment-pills" style="flex-wrap:wrap;justify-content:center" id="m-segs">
+        <button class="seg-btn active" onclick="mSeg(3,this)">121+</button>
+        <button class="seg-btn" onclick="mSeg(2,this)">61–120</button>
+        <button class="seg-btn" onclick="mSeg(1,this)">31–60</button>
+        <button class="seg-btn" onclick="mSeg(0,this)">1–30</button>
+      </div>
+    </div>
+    <div class="m-tabs">
+      <button class="m-tab active base" onclick="mPlan('base',this,'base')">Base</button>
+      <button class="m-tab" onclick="mPlan('plus',this,'plus')">Plus</button>
+      <button class="m-tab" onclick="mPlan('pro',this,'pro')">Pro ⭐</button>
+    </div>
+    <div class="m-plan active" id="m-base">
+      <div class="m-card">
+        <div class="plan-header">
+          <div class="plan-range" id="m-base-range">121+ HOGARES</div>
+          <div class="plan-name base">Base</div>
+          <div class="plan-price-row"><span class="plan-price" id="m-base-price">$149.900</span><span class="plan-price-unit" id="m-base-unit">/mes</span></div>
+          <div class="per-home"><span class="per-home-price" id="m-base-ph">$833</span><span class="per-home-label">por hogar al mes</span></div>
+          <div class="plan-install" id="m-base-ins">Instalación única: $320.000</div>
+          <div class="plan-tagline base">Empieza a reciclar</div>
+        </div>
+        <div class="plan-diffs">
+          <div class="diff-item"><div class="diff-dot" style="background:#008ECA"></div>Punto Limpio con 6 categorías</div>
+          <div class="diff-item"><div class="diff-dot" style="background:#008ECA"></div>Recolección <strong>quincenal</strong></div>
+          <div class="diff-item"><div class="diff-dot" style="background:#008ECA"></div>Reporte escrito vía WhatsApp</div>
+          <div class="diff-item muted"><div class="diff-dot"></div>Sin rediseño del cuarto</div>
+        </div>
+        <div class="plan-divider"></div>
+        <button class="acc-trigger" onclick="toggleAcc(this)">Ver todos los beneficios <span class="acc-arrow">▾</span></button>
+        <div class="acc-body">
+          <div class="acc-group"><div class="acc-group-title">Punto Limpio</div><div class="acc-item"><span class="acc-check">✓</span>resiBOTE Base: 6 categorías</div><div class="acc-item"><span class="acc-check">✓</span>Iluminación automática</div><div class="acc-item"><span class="acc-check">✓</span>Mantenimiento incluido</div></div>
+          <div class="acc-group"><div class="acc-group-title">Recolección</div><div class="acc-item"><span class="acc-check">✓</span>Frecuencia quincenal</div><div class="acc-item"><span class="acc-check">✓</span>Residuos separados a centros de reciclaje</div><div class="acc-item"><span class="acc-check">✓</span>Plan de contingencia</div></div>
+          <div class="acc-group"><div class="acc-group-title">Reporte</div><div class="acc-item"><span class="acc-check">✓</span>Reporte mensual escrito vía WhatsApp</div><div class="acc-item"><span class="acc-check">✓</span>resiTips Base — formato textual</div></div>
+        </div>
+        <div class="plan-cta"><button class="cta-btn">Activar Base</button></div>
+      </div>
+    </div>
+    <div class="m-plan" id="m-plus">
+      <div class="m-card">
+        <div class="plan-header">
+          <div class="plan-range" id="m-plus-range">121+ HOGARES</div>
+          <div class="plan-name plus">Plus</div>
+          <div class="plan-price-row"><span class="plan-price" id="m-plus-price">$199.900</span><span class="plan-price-unit" id="m-plus-unit">/mes</span></div>
+          <div class="per-home"><span class="per-home-price" id="m-plus-ph">$1.111</span><span class="per-home-label">por hogar al mes</span></div>
+          <div class="plan-install" id="m-plus-ins">Instalación única: $490.000</div>
+          <div class="plan-tagline plus">Más categorías, mayor impacto</div>
+        </div>
+        <div class="plan-diffs">
+          <div class="diff-item"><div class="diff-dot" style="background:#F26A2C"></div>Punto Limpio con 9+3 categorías</div>
+          <div class="diff-item"><div class="diff-dot" style="background:#F26A2C"></div>Recolección <strong>a demanda</strong></div>
+          <div class="diff-item"><div class="diff-dot" style="background:#F26A2C"></div>Rediseño experiencial del cuarto</div>
+          <div class="diff-item"><div class="diff-dot" style="background:#F26A2C"></div>Reporte escrito vía WhatsApp</div>
+        </div>
+        <div class="plan-divider"></div>
+        <button class="acc-trigger" onclick="toggleAcc(this)">Ver todos los beneficios <span class="acc-arrow">▾</span></button>
+        <div class="acc-body">
+          <div class="acc-group"><div class="acc-group-title">Punto Limpio</div><div class="acc-item"><span class="acc-check">✓</span>resiBOTE Plus: 9+3 categorías</div><div class="acc-item"><span class="acc-check">✓</span>Rediseño experiencial del cuarto</div><div class="acc-item"><span class="acc-check">✓</span>Mantenimiento incluido</div></div>
+          <div class="acc-group"><div class="acc-group-title">Recolección</div><div class="acc-item"><span class="acc-check">✓</span>Frecuencia a demanda</div><div class="acc-item"><span class="acc-check">✓</span>Residuos separados a centros de reciclaje</div><div class="acc-item"><span class="acc-check">✓</span>Plan de contingencia</div></div>
+          <div class="acc-group"><div class="acc-group-title">Reporte</div><div class="acc-item"><span class="acc-check">✓</span>Reporte mensual escrito vía WhatsApp</div><div class="acc-item"><span class="acc-check">✓</span>resiTips Base — formato textual</div></div>
+        </div>
+        <div class="plan-cta"><button class="cta-btn">Activar Plus</button></div>
+      </div>
+    </div>
+    <div class="m-plan" id="m-pro">
+      <div class="m-card featured">
+        <div class="featured-badge">MÁS POPULAR</div>
+        <div class="plan-header" style="padding-top:26px">
+          <div class="plan-range" id="m-pro-range">121+ HOGARES</div>
+          <div class="plan-name pro">Pro</div>
+          <div class="plan-price-row"><span class="plan-price" id="m-pro-price">$209.900</span><span class="plan-price-unit" id="m-pro-unit">/mes</span></div>
+          <div class="per-home"><span class="per-home-price" id="m-pro-ph">$1.166</span><span class="per-home-label">por hogar al mes</span></div>
+          <div class="plan-install" id="m-pro-ins">Instalación única: $490.000</div>
+          <div class="plan-tagline pro">Muestra fácilmente un mayor impacto</div>
+        </div>
+        <div class="plan-diffs">
+          <div class="diff-item"><div class="diff-dot" style="background:#4CA548"></div>Todo lo del plan Plus</div>
+          <div class="diff-item"><div class="diff-dot" style="background:#4CA548"></div><strong>Reporte mensual gráfico</strong> con proyección</div>
+          <div class="diff-item"><div class="diff-dot" style="background:#4CA548"></div>Comunicado automático a hogares</div>
+          <div class="diff-item"><div class="diff-dot" style="background:#4CA548"></div>resiTips Plus — imágenes y cartelera</div>
+        </div>
+        <div class="plan-divider"></div>
+        <button class="acc-trigger" onclick="toggleAcc(this)">Ver todos los beneficios <span class="acc-arrow">▾</span></button>
+        <div class="acc-body">
+          <div class="acc-group"><div class="acc-group-title">Punto Limpio</div><div class="acc-item"><span class="acc-check">✓</span>resiBOTE Plus: 9+3 categorías</div><div class="acc-item"><span class="acc-check">✓</span>Rediseño experiencial completo</div><div class="acc-item"><span class="acc-check">✓</span>Mantenimiento incluido</div></div>
+          <div class="acc-group"><div class="acc-group-title">Recolección</div><div class="acc-item"><span class="acc-check">✓</span>Frecuencia a demanda</div><div class="acc-item"><span class="acc-check">✓</span>Residuos separados a centros de reciclaje</div><div class="acc-item"><span class="acc-check">✓</span>Plan de contingencia</div></div>
+          <div class="acc-group"><div class="acc-group-title">Reporte</div><div class="acc-item"><span class="acc-check">✓</span>Reporte mensual gráfico con proyección de impacto</div><div class="acc-item"><span class="acc-check">✓</span>Comunicado automático a hogares</div><div class="acc-item"><span class="acc-check">✓</span>resiTips Plus — imágenes WhatsApp y cartelera</div></div>
+        </div>
+        <div class="plan-cta"><button class="cta-btn featured-cta">Activar Pro</button></div>
+      </div>
+    </div>
+    <div class="footnote">
+      <p>* Instalación por cuarto de residuos intervenido. Múltiples cuartos, consulta condiciones.</p>
+      <p>* Dos cuartos separados (reciclables / no reciclables) mantienen el mismo costo de instalación.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+// Datos: mensual y anual (mensual x 10 / 12 = precio equivalente mensual con 2 meses gratis)
+// precio anual total = mensual x 10, precio mensual equivalente = (mensual x 10) / 12
+const segs=[
+  {l:'1 – 30 HOGARES',
+   base:{pm:'$89.900',pa:'$74.917',phm:'$2.997',pha:'$2.497',ins:'$320.000'},
+   plus:{pm:'$109.900',pa:'$91.583',phm:'$3.663',pha:'$3.053',ins:'$490.000'},
+   pro: {pm:'$119.900',pa:'$99.917',phm:'$3.997',pha:'$3.331',ins:'$490.000'}},
+  {l:'31 – 60 HOGARES',
+   base:{pm:'$109.900',pa:'$91.583',phm:'$1.832',pha:'$1.527',ins:'$320.000'},
+   plus:{pm:'$139.900',pa:'$116.583',phm:'$2.332',pha:'$1.943',ins:'$490.000'},
+   pro: {pm:'$149.900',pa:'$124.917',phm:'$2.498',pha:'$2.082',ins:'$490.000'}},
+  {l:'61 – 120 HOGARES',
+   base:{pm:'$129.900',pa:'$108.250',phm:'$1.083',pha:'$902',ins:'$320.000'},
+   plus:{pm:'$169.900',pa:'$141.583',phm:'$1.416',pha:'$1.180',ins:'$490.000'},
+   pro: {pm:'$179.900',pa:'$149.917',phm:'$1.499',pha:'$1.249',ins:'$490.000'}},
+  {l:'121+ HOGARES',
+   base:{pm:'$149.900',pa:'$124.917',phm:'$833',pha:'$694',ins:'$320.000'},
+   plus:{pm:'$199.900',pa:'$166.583',phm:'$1.111',pha:'$926',ins:'$490.000'},
+   pro: {pm:'$209.900',pa:'$174.917',phm:'$1.166',pha:'$972',ins:'$490.000'}}
+];
+
+let curSeg=3, curBilling='mensual';
+
+function fmt(seg,plan,billing){
+  const d=segs[seg][plan];
+  return {
+    price: billing==='mensual'?d.pm:d.pa,
+    ph:    billing==='mensual'?d.phm:d.pha,
+    ins:   d.ins,
+    label: segs[seg].l,
+    unit:  billing==='mensual'?'/mes':'/mes equiv.'
+  };
+}
+
+function updateAll(){
+  ['base','plus','pro'].forEach(plan=>{
+    const f=fmt(curSeg,plan,curBilling);
+    ['d','m'].forEach(px=>{
+      const set=(id,val)=>{const el=document.getElementById(px+'-'+plan+'-'+id);if(el)el.textContent=val;};
+      set('price',f.price);
+      set('ph',f.ph);
+      set('range',f.label);
+      set('ins','Instalación única: '+f.ins);
+      const u=document.getElementById(px+'-'+plan+'-unit');
+      if(u)u.textContent=f.unit;
+    });
+  });
+}
+
+function setSeg(i,btn){
+  curSeg=i;
+  document.querySelectorAll('#d-segs .seg-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  updateAll();
+}
+
+function mSeg(i,btn){
+  curSeg=i;
+  document.querySelectorAll('#m-segs .seg-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  updateAll();
+}
+
+function setBilling(type){
+  curBilling=type;
+  document.getElementById('d-men-btn').classList.toggle('active',type==='mensual');
+  document.getElementById('d-anu-btn').classList.toggle('active',type==='anual');
+  const tag=document.getElementById('d-annual-tag');
+  tag.style.visibility=type==='anual'?'visible':'hidden';
+  updateAll();
+}
+
+function mBilling(type){
+  curBilling=type;
+  document.getElementById('m-men-btn').classList.toggle('active',type==='mensual');
+  document.getElementById('m-anu-btn').classList.toggle('active',type==='anual');
+  const tag=document.getElementById('m-annual-tag');
+  tag.style.visibility=type==='anual'?'visible':'hidden';
+  updateAll();
+}
+
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  body.classList.toggle('open');
+  const arrow=btn.querySelector('.acc-arrow');
+  if(arrow)arrow.style.transform=body.classList.contains('open')?'rotate(180deg)':'rotate(0)';
+}
+
+let mCur='base';
+function mPlan(id,btn,color){
+  document.getElementById('m-'+mCur).classList.remove('active');
+  document.querySelectorAll('.m-tab').forEach(t=>t.classList.remove('active','base','plus','pro'));
+  mCur=id;
+  document.getElementById('m-'+id).classList.add('active');
+  btn.classList.add('active',color);
+}
+</script>

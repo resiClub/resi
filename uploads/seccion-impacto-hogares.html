@@ -1,0 +1,249 @@
+<!-- SECCIÓN: IMPACTO — Landing Hogares -->
+<!-- Usar con el sistema de diseño de Resi. Reemplazar variables CSS por los tokens del proyecto. -->
+
+<section class="resi-impacto">
+  <div class="resi-impacto__inner">
+
+    <!-- Columna izquierda -->
+    <div class="resi-impacto__left">
+      <p class="resi-eyebrow">
+        <span class="resi-eyebrow__dot"></span>
+        Impacto
+      </p>
+      <h2 class="resi-impacto__titulo">
+        Llegan a <span class="resi-verde">buenas manos</span>
+      </h2>
+      <p class="resi-impacto__descripcion">
+        Cada residuo que separas llega directamente a un reciclador que conoces por su nombre y su historia en tu edificio.
+      </p>
+      <a href="#" class="resi-btn-outline">
+        Conoce al reciclador de tu edificio
+      </a>
+    </div>
+
+    <!-- Columna derecha: imagen + tarjeta de testimonio -->
+    <div class="resi-impacto__right">
+      <div class="resi-impacto__img-wrapper">
+        <!-- Reemplazar por imagen real -->
+        <div class="resi-impacto__img-placeholder" aria-label="Foto del reciclador"></div>
+
+        <!-- Tarjeta de testimonio superpuesta -->
+        <div class="resi-impacto__testimonio">
+          <span class="resi-impacto__comillas">&#10075;&#10075;</span>
+          <p class="resi-impacto__quote">
+            "Ahora es más fácil trabajar porque a uno le entregan cada material separado, como debe ser"
+          </p>
+          <div class="resi-impacto__autor">
+            <span class="resi-impacto__autor-linea"></span>
+            <div>
+              <strong class="resi-impacto__autor-nombre">Óscar</strong>
+              <span class="resi-impacto__autor-rol">Reciclador beneficiado, Manizales</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Tokens — reemplazar por variables del sistema de diseño de Resi ── */
+  :root {
+    --resi-verde: #2E7D32;         /* verde principal */
+    --resi-verde-claro: #4CAF50;   /* verde highlight */
+    --resi-azul-oscuro: #1A1F4B;   /* texto títulos */
+    --resi-gris-texto: #555;       /* texto descriptivo */
+    --resi-bg: #F5F0E8;            /* fondo beige/crema de la sección */
+    --resi-blanco: #FFFFFF;
+    --resi-radius: 16px;
+    --resi-font-display: 'DM Sans', sans-serif;   /* ajustar al font del proyecto */
+    --resi-font-body: 'DM Sans', sans-serif;
+  }
+
+  /* ── Sección ── */
+  .resi-impacto {
+    background-color: var(--resi-bg);
+    padding: 96px 0;
+  }
+
+  .resi-impacto__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  /* ── Columna izquierda ── */
+  .resi-impacto__left {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  /* ── Eyebrow ── */
+  .resi-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--resi-font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--resi-verde);
+    margin: 0;
+  }
+
+  .resi-eyebrow__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--resi-verde);   /* dot relleno */
+    flex-shrink: 0;
+  }
+
+  /* ── Título ── */
+  .resi-impacto__titulo {
+    font-family: var(--resi-font-display);
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 800;
+    color: var(--resi-azul-oscuro);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .resi-verde {
+    color: var(--resi-verde-claro);
+  }
+
+  /* ── Párrafo ── */
+  .resi-impacto__descripcion {
+    font-family: var(--resi-font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--resi-gris-texto);
+    margin: 0;
+    max-width: 440px;
+  }
+
+  /* ── Botón outline ── */
+  .resi-btn-outline {
+    display: inline-block;
+    padding: 14px 28px;
+    border: 1.5px solid var(--resi-azul-oscuro);
+    border-radius: 999px;
+    font-family: var(--resi-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--resi-azul-oscuro);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .resi-btn-outline:hover {
+    background-color: var(--resi-azul-oscuro);
+    color: var(--resi-blanco);
+  }
+
+  /* ── Columna derecha ── */
+  .resi-impacto__right {
+    position: relative;
+  }
+
+  .resi-impacto__img-wrapper {
+    position: relative;
+    border-radius: var(--resi-radius);
+    overflow: visible;
+  }
+
+  /* Placeholder — reemplazar por <img> real */
+  .resi-impacto__img-placeholder {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: var(--resi-radius);
+    background-color: #C8C0B0;
+    object-fit: cover;
+  }
+
+  /* ── Tarjeta de testimonio superpuesta ── */
+  .resi-impacto__testimonio {
+    position: absolute;
+    bottom: 32px;
+    left: -32px;
+    right: 32px;
+    background-color: var(--resi-blanco);
+    border-radius: var(--resi-radius);
+    padding: 24px 28px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .resi-impacto__comillas {
+    font-size: 24px;
+    color: var(--resi-verde);
+    line-height: 1;
+  }
+
+  .resi-impacto__quote {
+    font-family: var(--resi-font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--resi-azul-oscuro);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .resi-impacto__autor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .resi-impacto__autor-linea {
+    display: block;
+    width: 32px;
+    height: 3px;
+    background-color: var(--resi-verde);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .resi-impacto__autor-nombre {
+    display: block;
+    font-family: var(--resi-font-body);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--resi-azul-oscuro);
+  }
+
+  .resi-impacto__autor-rol {
+    display: block;
+    font-family: var(--resi-font-body);
+    font-size: 12px;
+    color: var(--resi-gris-texto);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .resi-impacto__inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 0 24px;
+    }
+
+    .resi-impacto__testimonio {
+      left: 0;
+      right: 0;
+      position: relative;
+      bottom: auto;
+      margin-top: -48px;
+    }
+  }
+</style>
