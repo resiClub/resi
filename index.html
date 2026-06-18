@@ -99,7 +99,7 @@
 const ROUTES = ["administradores", "hogares"];
 const routeFromHash = () => {
   const h = (location.hash || "").replace(/^#\/?/, "").toLowerCase();
-  return ROUTES.includes(h) ? h : "administradores";
+  return ROUTES.includes(h) ? h : "hogares";
 };
 
 // --- Route bodies (no nav / no footer — the shell owns those) -----
