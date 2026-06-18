@@ -25,8 +25,8 @@ const HogaresCalculator = () => {
       fontSize: isMobile ? "clamp(26px, 7vw, 36px)" : "clamp(32px, 3.6vw, 48px)", letterSpacing: "-.015em",
       lineHeight: 1.12, margin: 0, color: "rgb(7, 7, 78)"
     }}>
-        80% de lo que separas<br />
-        hoy no se <span style={{ color: "var(--resi-green)" }}>recicla</span>
+        80% de los que separas<br />
+        hoy no se <span style={{ color: "var(--resi-green)" }}>reciclan</span>
       </h2>
     </React.Fragment>;
 

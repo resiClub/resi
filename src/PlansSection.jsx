@@ -63,7 +63,7 @@ const PLAN_META = {
   plus: {
     name: "Plus", color: "#F26A2C", tagline: "Más categorías, mayor impacto",
     diffs: [
-      { t: <>Punto Limpio con 9+3 categorías</> },
+      { t: <>Punto Limpio con 12 categorías</> },
       { t: <>Recolección <strong>a demanda</strong></> },
       { t: <>Rediseño experiencial del cuarto</> },
       { t: <>Reporte escrito vía WhatsApp</> },
