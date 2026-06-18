@@ -33,6 +33,7 @@ const HOGARES_STEPS_CARDS = [
 },
 {
   color: "green", initials: "rCl", brand: "resiCLUB", img: "Foto — resiCLUB",
+  photo: "https://res.cloudinary.com/db8a6pwok/image/upload/q_auto/f_auto/v1780522668/IMG_0681_bxsvcu.jpg", photoAlt: "resiCLUB — tu huella mensual",
   logo: "assets/logos/resiClub.png", logoAlt: "resiCLUB",
   step: "Paso 04", title: "Conoce ", highlight: "tu huella",
   desc: "Cada mes te contamos cuánto reciclaste y a quién se lo entregamos.",

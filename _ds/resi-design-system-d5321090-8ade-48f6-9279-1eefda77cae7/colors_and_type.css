@@ -1,0 +1,256 @@
+/* ============================================================
+   resi Design System — Colors & Type
+   Source: Manual de Marca resi 2024
+   ============================================================ */
+
+/* Fonts ------------------------------------------------------ */
+/* Body / corporate type — Nunito (per brand manual) */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap");
+/* Display / brand-aligned headlines — Quicksand.
+   NOTE: The brand manual specifies "Arciform" (Matt Ellis) for the logotype.
+   Arciform is single-weight and doesn't hold up across a full UI (no real
+   bold, weak at small sizes), so the SYSTEM uses Quicksand — the closest
+   rounded-geometric face that ships multiple weights. Use the actual
+   Arciform file only for one-off logotype/lockup work, not body interface. */
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+/* Category / lid labels — the ACTUAL brand face (Arciform, Matt Ellis).
+   Used verbatim on the resiCubo / resiBote lids: rounded, lowercase.
+   Single weight — use ONLY for category names & lid-faithful labels. */
+@font-face {
+  font-family: "Arciform";
+  src: url("assets/fonts/Arciform.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  /* ---- Brand color palette (Manual §COLORES) ---- */
+  --resi-navy:   #07074E; /* primary — institutional */
+  --resi-blue:   #009CD7; /* category — agua / vidrio */
+  --resi-orange: #F15D2A; /* category — papel/cartón */
+  --resi-pink:   #CC6CA2; /* category — orgánico */
+  --resi-green:  #4CB748; /* category / sostenibilidad */
+  --resi-white:  #FFFFFF;
+
+  /* ---- Monochromatic counterparts (for the 4 waste categories) ---- */
+  --resi-blue-dark:   #00416B;
+  --resi-green-dark:  #00582A;
+  --resi-orange-dark: #7A1502;
+  --resi-pink-dark:   #4C0049;
+
+  /* ---- Waste-category identity colors ----
+     The colors users see on the physical resiCubo / resiBote lids and in
+     resiTips. One token per classification category. These are operational
+     identity colors — keep them tied to the lid icons in assets/categories/.
+     Source: resiCubo lid SVGs (2026).                                        */
+  --resi-category-carton:        #F26A2C;  /* Cartones                        */
+  --resi-category-envolturas:    #E45DBF;  /* Bolsas                          */
+  --resi-category-metal:         #D4A017;  /* Metales / tetrapack             */
+  --resi-category-papel:         #4CA548;  /* Papeles                         */
+  --resi-category-plastico:      #008ECA;  /* Plásticos                       */
+  --resi-category-vidrio:        #2D2147;  /* Vidrio — navy propio (ya distinto
+                                              de Metales); lid POR DEFINIR     */
+  --resi-category-organicos:     #A9ACBE;  /* Orgánicos — POR DEFINIR
+                                              (placeholder = fg-disabled)      */
+  --resi-category-sanitarios:    #A9ACBE;  /* Sanitarios — POR DEFINIR
+                                              (placeholder = fg-disabled)      */
+
+  /* ---- Neutrals (white-dominant system) ---- */
+  --resi-bg:        #FFFFFF;
+  --resi-bg-soft:   #F7F8FA;   /* cards / fills on white pages   */
+  --resi-bg-muted:  #EEF0F4;   /* dividers, hover surfaces        */
+  --resi-line:      #E2E5EC;   /* default 1px borders             */
+  --resi-line-strong: #C8CCD6;
+  --resi-fg:        #07074E;   /* default text = brand navy       */
+  --resi-fg-2:      #3A3D63;   /* secondary text                   */
+  --resi-fg-3:      #6C6F8A;   /* tertiary / captions              */
+  --resi-fg-disabled: #A9ACBE;
+
+  /* ---- Semantic ---- */
+  --resi-success: var(--resi-green);
+  --resi-info:    var(--resi-blue);
+  --resi-warning: var(--resi-orange);
+  --resi-danger:  #C8200E;     /* derived; not in manual          */
+
+  /* ---- Type families ---- */
+  --font-display: "Quicksand", "Nunito", system-ui, sans-serif;  /* see note above re: Arciform */
+  --font-body:    "Nunito", system-ui, -apple-system, sans-serif;
+  --font-category: "Arciform", "Quicksand", system-ui, sans-serif;  /* lid / category labels (lowercase) */
+
+  /* ---- Type scale (px) ---- */
+  --text-xs:    12px;
+  --text-sm:    14px;
+  --text-base:  16px;
+  --text-md:    18px;
+  --text-lg:    20px;
+  --text-xl:    24px;
+  --text-2xl:   32px;
+  --text-3xl:   40px;
+  --text-4xl:   56px;
+  --text-5xl:   72px;
+
+  /* ---- Weights ---- */
+  --w-extralight: 200; /* @kind font */
+  --w-regular:    400; /* @kind font */
+  --w-medium:     500; /* @kind font */
+  --w-semibold:   600; /* @kind font */
+  --w-bold:       700; /* @kind font */
+  --w-heavy:      800; /* @kind font */
+
+  /* ---- Line heights ---- */
+  --lh-tight: 1.1; /* @kind font */
+  --lh-snug:  1.25; /* @kind font */
+  --lh-base:  1.5; /* @kind font */
+  --lh-loose: 1.7; /* @kind font */
+
+  /* ---- Tracking ---- */
+  --tr-tight:   -0.02em; /* @kind font */
+  --tr-normal:   0em; /* @kind font */
+  --tr-wide:     0.04em; /* @kind font */
+  --tr-eyebrow:  0.12em; /* @kind font */
+
+  /* ---- Corner radii — "todo rectángulo redondeado" ---- */
+  --r-xs:   6px;
+  --r-sm:   10px;
+  --r-md:   16px;   /* default for cards, inputs                */
+  --r-lg:   24px;   /* feature cards, modals                    */
+  --r-xl:   32px;
+  --r-2xl:  48px;
+  --r-pill: 999px;  /* buttons, chips, pills                    */
+
+  /* ---- Spacing scale (4-pt) ---- */
+  --s-0:   0; /* @kind spacing */
+  --s-1:   4px;
+  --s-2:   8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
+
+  /* ---- Elevation (soft, never harsh — clean / calm brand) ---- */
+  --shadow-xs: 0 1px 2px  rgba(7, 7, 78, 0.06);
+  --shadow-sm: 0 2px 6px  rgba(7, 7, 78, 0.07);
+  --shadow-md: 0 8px 24px rgba(7, 7, 78, 0.08);
+  --shadow-lg: 0 20px 48px rgba(7, 7, 78, 0.10);
+  --shadow-focus: 0 0 0 4px rgba(0, 156, 215, 0.25); /* blue ring */
+
+  /* ---- Motion ---- */
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --dur-fast:   140ms; /* @kind other */
+  --dur-base:   220ms; /* @kind other */
+  --dur-slow:   400ms; /* @kind other */
+}
+
+/* ============================================================
+   Semantic type styles
+   ============================================================ */
+.display-1, h1.display, .h-display {
+  font-family: var(--font-display);
+  font-weight: var(--w-bold);
+  font-size: clamp(40px, 6vw, var(--text-5xl));
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--resi-navy);
+}
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: var(--w-bold);
+  font-size: clamp(32px, 4.4vw, var(--text-4xl));
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--resi-navy);
+  text-wrap: balance;
+}
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: var(--w-semibold);
+  font-size: var(--text-3xl);
+  line-height: var(--lh-snug);
+  color: var(--resi-navy);
+  text-wrap: balance;
+}
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: var(--w-semibold);
+  font-size: var(--text-2xl);
+  line-height: var(--lh-snug);
+  color: var(--resi-navy);
+}
+h4, .h4 {
+  font-family: var(--font-body);
+  font-weight: var(--w-bold);
+  font-size: var(--text-xl);
+  line-height: var(--lh-snug);
+  color: var(--resi-navy);
+}
+h5, .h5 {
+  font-family: var(--font-body);
+  font-weight: var(--w-bold);
+  font-size: var(--text-md);
+  line-height: var(--lh-snug);
+  color: var(--resi-navy);
+}
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: var(--w-bold);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-eyebrow);
+  color: var(--resi-green);
+}
+p, .body {
+  font-family: var(--font-body);
+  font-weight: var(--w-regular);
+  font-size: var(--text-base);
+  line-height: var(--lh-base);
+  color: var(--resi-fg-2);
+  text-wrap: pretty;
+}
+.lead {
+  font-family: var(--font-body);
+  font-weight: var(--w-regular);
+  font-size: var(--text-lg);
+  line-height: var(--lh-base);
+  color: var(--resi-fg-2);
+}
+.caption {
+  font-family: var(--font-body);
+  font-weight: var(--w-regular);
+  font-size: var(--text-sm);
+  line-height: var(--lh-snug);
+  color: var(--resi-fg-3);
+}
+.label {
+  font-family: var(--font-body);
+  font-weight: var(--w-semibold);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tr-wide);
+  color: var(--resi-fg);
+}
+small, .small {
+  font-size: var(--text-xs);
+  color: var(--resi-fg-3);
+}
+code, kbd, samp {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.92em;
+  background: var(--resi-bg-soft);
+  border: 1px solid var(--resi-line);
+  border-radius: var(--r-xs);
+  padding: 0.05em 0.4em;
+}
+
+/* Anchor — brand blue, no underline by default */
+a {
+  color: var(--resi-blue);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+a:hover { color: var(--resi-blue-dark); text-decoration: underline; }

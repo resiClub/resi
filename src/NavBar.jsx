@@ -40,8 +40,8 @@ const NavBar = ({ route = "administradores", onRoute = () => {}, ctaCopy = "Empe
   const chipColor = isHogares ? "var(--resi-green)" : "var(--resi-navy)";
   const chipLabel = isHogares ? "Hogares" : "Administradores";
   const cross = isHogares
-    ? { label: "¿Eres administrador?", to: "administradores" }
-    : { label: "¿Eres un hogar?",      to: "hogares" };
+    ? { label: "¿Eres administrador?", mobileLabel: "¿Eres administrador?", to: "administradores", color: "var(--resi-navy)" }
+    : { label: "¿Eres un hogar?",      mobileLabel: "¿Eres un hogar?",      to: "hogares",          color: "var(--resi-green)" };
 
   const [crossHover, setCrossHover] = React.useState(false);
 
@@ -97,12 +97,19 @@ const NavBar = ({ route = "administradores", onRoute = () => {}, ctaCopy = "Empe
         {/* Right cluster */}
         {isMobile ? (
           <div style={{ display: "flex", gap: 8, alignItems: "center", flexShrink: 0, marginLeft: "auto" }}>
-            {/* Primary CTA stays in the bar — compact on mobile */}
-            <Button variant="primary" size="sm"
-                    style={{ padding: "0 14px", maxWidth: "44vw", overflow: "hidden" }}
-                    onClick={() => goSection("planes")}>
-              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ctaCopy}</span>
-            </Button>
+            {/* Cross-audience nav button replaces the primary CTA on mobile */}
+            <a href="#"
+               onClick={(e) => { e.preventDefault(); setMenuOpen(false); onRoute(cross.to); }}
+               style={{
+                 display: "inline-flex", alignItems: "center", justifyContent: "center",
+                 height: 40, padding: "0 16px", maxWidth: "52vw", overflow: "hidden",
+                 borderRadius: "var(--r-pill)", background: cross.color, color: "#fff",
+                 fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 14,
+                 textDecoration: "none", whiteSpace: "nowrap",
+                 transition: "background var(--dur-base) var(--ease-out)",
+               }}>
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{cross.mobileLabel}</span>
+            </a>
             {/* Hamburger / close toggle — 44px touch target */}
             <button
               aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}

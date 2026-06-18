@@ -21,45 +21,50 @@ const STEPPER = [
     n: 1,
     navLabel: "Instala Punto Limpio",
     title: [{ t: "Instala el " }, { t: "Punto Limpio", g: true }],
-    desc: "Instalamos el sistema de contenedores en tu edificio, organizados por categoría de residuo. Sin obras, sin complicaciones.",
-    benefits: ["Señalética clara para cada categoría", "Hasta 12 tipos de residuo", "Instalación en 1 día"],
+    desc: "Instalamos el sistema de contenedores en tu edificio, organizados por categoría de residuo.",
+    benefits: ["Señalética clara", "Hasta 12 categorías", "Instalación en horas"],
     photo: "Foto — Punto Limpio instalado",
+    photoSrc: "https://res.cloudinary.com/db8a6pwok/image/upload/q_auto/f_auto/v1781576238/IMG_0765_ywbika.jpg",
     logo: "assets/logos/resiBote.png", logoAlt: "resiBOTE",
   },
   {
     n: 2,
     navLabel: "Hogares reciclan",
     title: [{ t: "Hogares", g: true }, { t: " reciclan" }],
-    desc: "Cada apartamento separa y deposita sus residuos en el Punto Limpio. Separan fácil, sin depender de cada uno.",
-    benefits: ["Opción A: separan desde el shut", "Opción B: separan con resiCUBO en casa", "Sin fricción para el residente"],
+    desc: "Cada apartamento separa y deposita sus residuos en el Punto Limpio.",
+    benefits: ["Opción A: separan desde el shut", "Opción B: separan con resiCUBO en casa", "Fácil e intuitivo"],
     photo: "Foto — Residente depositando residuos",
+    photoSrc: "https://res.cloudinary.com/db8a6pwok/image/upload/q_auto/f_auto/v1780524582/IMG_0692_s43bi6.jpg",
     logo: "assets/logos/resiCubo.png", logoAlt: "resiCUBO",
   },
   {
     n: 3,
     navLabel: "Recolección segura",
     title: [{ t: "Recolección", g: true }, { t: " segura" }],
-    desc: "Un reciclador de tu confianza recoge los residuos directamente en tu edificio. En el shut, sin mezclas.",
+    desc: "Un reciclador de tu confianza recoge los residuos directamente en tu edificio.",
     benefits: ["Personal 100% identificado", "Sin manipulación directa de residuos", "Garantía de destino final"],
     photo: "Foto — Reciclador en el edificio",
+    photoSrc: "https://res.cloudinary.com/db8a6pwok/image/upload/q_auto/f_auto/v1781578098/g2_jjynz9.png",
     logo: "assets/logos/resiLona.png", logoAlt: "resiLONA",
   },
   {
     n: 4,
     navLabel: "Crece tu tasa",
     title: [{ t: "Crece", g: true }, { t: " tu tasa" }],
-    desc: "Medimos el reciclaje de tu edificio y te reportamos el impacto mes a mes. Trazabilidad mensual para cumplir la norma.",
-    benefits: ["Tasa de reciclaje monitorizada", "Comparativa mensual", "Datos para reducir tarifa de aseo"],
+    desc: "Medimos el reciclaje de tu edificio y te reportamos el impacto mes a mes.",
+    benefits: ["Tasa de reciclaje", "Trazabilidad mensual", "Datos para reducir tarifa de aseo"],
     photo: "Foto — Dashboard de trazabilidad",
+    photoSrc: "https://res.cloudinary.com/db8a6pwok/image/upload/q_auto/f_auto/v1780533282/IMG_0676_2_lfkvm6.jpg",
     logo: "assets/logos/resiClub.png", logoAlt: "resiCLUB",
   },
   {
     n: 5,
     navLabel: "Comunidad motivada",
     title: [{ t: "Comunidad " }, { t: "motivada", g: true }],
-    desc: "Tus residentes ven su impacto y se motivan a reciclar más cada mes. Reportes cada mes, menos quejas, más cultura.",
-    benefits: ["Reportes vía WhatsApp a residentes", "Próximos pasos y metas", "Ranking por apartamento"],
+    desc: "Tu comunidad ve su impacto y se motiva a reciclar más cada mes.",
+    benefits: ["Reportes vía WhatsApp", "Próximos pasos y metas", "Tips de reciclaje"],
     photo: "Foto — App con reporte mensual",
+    photoSrc: "https://res.cloudinary.com/db8a6pwok/image/upload/q_auto/f_auto/v1781644775/IMG_0778_fpdond.jpg",
     logo: "assets/logos/resiTips.png", logoAlt: "resiTIPS",
   },
 ];
@@ -181,15 +186,19 @@ const StepPanel = ({ step, current, goTo }) => (
 
     {/* image with product badge */}
     <div style={{
-      position: "relative", width: "100%", height: 360, borderRadius: "var(--r-lg)",
+      position: "relative", width: "100%", aspectRatio: "16 / 9", borderRadius: "var(--r-lg)",
       overflow: "hidden", border: "1px solid var(--resi-line)",
-      background: "linear-gradient(150deg, var(--resi-bg-soft) 0%, var(--resi-bg-muted) 100%)",
+      background: "#f5f5f5",
       display: "flex", alignItems: "center", justifyContent: "center",
     }}>
+      {step.photoSrc ?
+      <img src={step.photoSrc} alt={step.photo}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /> :
       <span style={{
         fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 700,
         letterSpacing: ".08em", textTransform: "uppercase", color: "var(--resi-fg-3)",
       }}>{step.photo}</span>
+      }
 
       {/* product badge — bottom-left */}
       <div style={{
@@ -297,18 +306,22 @@ const MobileStepper = ({ current, goTo }) => {
               pointerEvents: active ? "auto" : "none",
               animation: active ? "resiStepFade .3s var(--ease-out) both" : "none",
             }}>
-              {/* image with product badge — full width, fixed 200px, cover */}
+              {/* image with product badge — full width, 16/9, cover */}
               <div style={{
-                position: "relative", width: "100%", height: 200, borderRadius: "var(--r-lg)",
+                position: "relative", width: "100%", aspectRatio: "16 / 9", borderRadius: "var(--r-lg)",
                 overflow: "hidden", border: "1px solid var(--resi-line)",
-                background: "linear-gradient(150deg, var(--resi-bg-soft) 0%, var(--resi-bg-muted) 100%)",
+                background: "#f5f5f5",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
+                {step.photoSrc ?
+                <img src={step.photoSrc} alt={step.photo}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /> :
                 <span style={{
                   fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 700,
                   letterSpacing: ".08em", textTransform: "uppercase", color: "var(--resi-fg-3)",
                   textAlign: "center", padding: "0 16px",
                 }}>{step.photo}</span>
+                }
 
                 <div style={{
                   position: "absolute", left: 16, bottom: 16,

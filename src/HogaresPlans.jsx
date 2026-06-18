@@ -10,7 +10,7 @@
 const HOGARES_PLANS = [
   {
     key: "base", name: "Base", color: "var(--resi-blue)",
-    pm: "$11.900", pa: "$9.900",
+    pm: "$9.900", pa: "$7.900",
     tagline: "Empieza a reciclar desde tu hogar",
     subtag: "Lo esencial para separar bien desde el primer día.",
     features: [
@@ -21,7 +21,7 @@ const HOGARES_PLANS = [
   },
   {
     key: "plus", name: "Plus", color: "var(--resi-orange)", featured: true,
-    pm: "$19.900", pa: "$16.900",
+    pm: "$17.900", pa: "$14.900",
     tagline: "Más capacidad, fuera de tu vista",
     subtag: "Más espacio adentro, el mismo en tu cocina.",
     features: [
@@ -35,7 +35,7 @@ const HOGARES_PLANS = [
   },
   {
     key: "pro", name: "Pro", color: "var(--resi-green)",
-    pm: "$24.900", pa: "$20.900",
+    pm: "$22.900", pa: "$18.900",
     tagline: "Para ir un paso más allá",
     subtag: "Suma residuos de comida y el doble de bags.",
     features: [
