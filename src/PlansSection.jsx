@@ -1,31 +1,27 @@
 // ============================================================
-// PlansSection — Planes para administradores (3 planes)
+// PlansSection — Planes para administradores (2 planes)
 // Desktop only. Segment (aptos) + billing (mensual/anual) toggles
 // recompute prices live. Structure & content ported 1:1 from the
 // reference HTML; styled with resi design tokens.
 //
 // Exact plan colors are FIXED by spec (do not tokenize):
-//   Base #008ECA · Plus #F26A2C · Pro #4CA548
+//   Base #008ECA · Plus #4CA548
 // ============================================================
 
 // Pricing data. Annual equivalent monthly = monthly × 10 / 12 (2 meses gratis).
 const PLAN_SEGS = [
   { l: "1 – 30 HOGARES",
-    base: { pm: "$89.900",  pa: "$74.917",  phm: "$2.997", pha: "$2.497", ins: "$299.900" },
-    plus: { pm: "$109.900", pa: "$91.583",  phm: "$3.663", pha: "$3.053", ins: "$499.900" },
-    pro:  { pm: "$119.900", pa: "$99.917",  phm: "$3.997", pha: "$3.331", ins: "$499.900" } },
+    base: { pm: "$54.900", pa: "$45.750", phm: "$1.830", pha: "$1.525", ins: "$149.900" },
+    plus: { pm: "$59.900", pa: "$49.917", phm: "$1.997", pha: "$1.664", ins: "$249.900" } },
   { l: "31 – 60 HOGARES",
-    base: { pm: "$109.900", pa: "$91.583",  phm: "$1.832", pha: "$1.527", ins: "$299.900" },
-    plus: { pm: "$139.900", pa: "$116.583", phm: "$2.332", pha: "$1.943", ins: "$499.900" },
-    pro:  { pm: "$149.900", pa: "$124.917", phm: "$2.498", pha: "$2.082", ins: "$499.900" } },
+    base: { pm: "$64.900", pa: "$54.083", phm: "$1.082", pha: "$901",   ins: "$149.900" },
+    plus: { pm: "$69.900", pa: "$58.250", phm: "$1.165", pha: "$971",   ins: "$249.900" } },
   { l: "61 – 120 HOGARES",
-    base: { pm: "$129.900", pa: "$108.250", phm: "$1.083", pha: "$902",   ins: "$299.900" },
-    plus: { pm: "$169.900", pa: "$141.583", phm: "$1.416", pha: "$1.180", ins: "$499.900" },
-    pro:  { pm: "$179.900", pa: "$149.917", phm: "$1.499", pha: "$1.249", ins: "$499.900" } },
+    base: { pm: "$74.900", pa: "$62.417", phm: "$624",   pha: "$520",   ins: "$149.900" },
+    plus: { pm: "$79.900", pa: "$66.583", phm: "$666",   pha: "$555",   ins: "$249.900" } },
   { l: "121+ HOGARES",
-    base: { pm: "$149.900", pa: "$124.917", phm: "$833",   pha: "$694",   ins: "$299.900" },
-    plus: { pm: "$199.900", pa: "$166.583", phm: "$1.111", pha: "$926",   ins: "$499.900" },
-    pro:  { pm: "$209.900", pa: "$174.917", phm: "$1.166", pha: "$972",   ins: "$499.900" } },
+    base: { pm: "$84.900", pa: "$70.750", phm: "$472",   pha: "$393",   ins: "$149.900" },
+    plus: { pm: "$89.900", pa: "$74.917", phm: "$499",   pha: "$416",   ins: "$249.900" } },
 ];
 
 // Segment pills, displayed in this exact order; default active = "121+ aptos" (idx 3).
@@ -41,8 +37,9 @@ const PLAN_META = {
     name: "Base", color: "#008ECA", tagline: "Empieza a reciclar",
     diffs: [
       { t: <>Punto Limpio con 6 categorías</> },
-      { t: <>Recolección <strong>quincenal</strong></> },
-      { t: <>Reporte escrito vía WhatsApp</> },
+      { t: <>Recolección a demanda</> },
+      { t: <>Reporte mensual de reciclaje</> },
+      { t: <>resiTips vía WhatsApp y cartelera</> },
       { t: <>Sin rediseño del cuarto de residuos</>, muted: true },
     ],
     groups: [
@@ -61,12 +58,13 @@ const PLAN_META = {
     cta: "Activar Base",
   },
   plus: {
-    name: "Plus", color: "#F26A2C", tagline: "Más categorías, mayor impacto",
+    name: "Plus", color: "#4CA548", tagline: "Más categorías, mayor impacto", featured: true,
     diffs: [
       { t: <>Punto Limpio con 12 categorías</> },
-      { t: <>Recolección <strong>a demanda</strong></> },
+      { t: <>Recolección a demanda</> },
+      { t: <>Reporte mensual de reciclaje</> },
+      { t: <>resiTips vía WhatsApp y cartelera</> },
       { t: <>Rediseño experiencial del cuarto</> },
-      { t: <>Reporte escrito vía WhatsApp</> },
     ],
     groups: [
       { title: "Punto Limpio", items: [
@@ -82,30 +80,6 @@ const PLAN_META = {
         "resiTips Base — formato textual vía WhatsApp" ] },
     ],
     cta: "Activar Plus",
-  },
-  pro: {
-    name: "Pro", color: "#4CA548", tagline: "Muestra fácilmente un mayor impacto", featured: true,
-    diffs: [
-      { t: <>Todo lo del plan Plus</> },
-      { t: <><strong>Reporte mensual gráfico</strong> con proyección</> },
-      { t: <>Comunicado automático a hogares</> },
-      { t: <>resiTips Plus — imágenes y cartelera</> },
-    ],
-    groups: [
-      { title: "Punto Limpio", items: [
-        "resiBOTE Plus: 9 categorías + 3 especiales",
-        "Rediseño experiencial completo",
-        "Mantenimiento incluido" ] },
-      { title: "Recolección garantizada", items: [
-        "Frecuencia a demanda",
-        "Residuos llegan separados a centros de reciclaje",
-        "Plan de contingencia ante inasistencia" ] },
-      { title: "Seguimiento y reporte", items: [
-        "Reporte mensual gráfico: kg por categoría, proyección de impacto, evolución, a quién le entregas",
-        "Versión resumida comunicada automáticamente a hogares",
-        "resiTips Plus — imágenes vía WhatsApp y cartelera" ] },
-    ],
-    cta: "Activar Pro",
   },
 };
 
@@ -207,16 +181,14 @@ const PlansSection = () => {
 
         {/* Plan cards — 3-up grid on desktop, swipeable carousel on mobile */}
         {isMobile ? (
-          <PlansCarousel featuredIndex={2}>
+          <PlansCarousel featuredIndex={1}>
             <PlanCard planKey="base" segIdx={segIdx} billing={billing} />
             <PlanCard planKey="plus" segIdx={segIdx} billing={billing} />
-            <PlanCard planKey="pro" segIdx={segIdx} billing={billing} />
           </PlansCarousel>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, alignItems: "start" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, alignItems: "start", maxWidth: 720, margin: "0 auto" }}>
             <PlanCard planKey="base" segIdx={segIdx} billing={billing} />
             <PlanCard planKey="plus" segIdx={segIdx} billing={billing} />
-            <PlanCard planKey="pro" segIdx={segIdx} billing={billing} />
           </div>
         )}
 

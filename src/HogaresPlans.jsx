@@ -10,7 +10,7 @@
 const HOGARES_PLANS = [
 {
   key: "base", name: "Base", color: "var(--resi-blue)",
-  pm: "$9.900", pa: "$7.900",
+  pm: "$6.900", pa: "$5.900",
   tagline: "Empieza a reciclar desde tu hogar",
   subtag: "Lo esencial para separar bien desde el primer día.",
   features: [
@@ -21,21 +21,20 @@ const HOGARES_PLANS = [
 },
 {
   key: "plus", name: "Plus", color: "var(--resi-orange)", featured: true,
-  pm: "$17.900", pa: "$14.900",
+  pm: "$9.900", pa: "$7.900",
   tagline: "Más capacidad, fuera de tu vista",
   subtag: "Más espacio adentro, el mismo en tu cocina.",
   features: [
   <><strong>resiCUBO Plus</strong> (30L · 60cm)</>,
   <><strong>5 resiLONAS Plus</strong> reutilizables</>,
   <><strong>Base retráctil</strong> — vive escondido en tu cocina</>,
-  <><strong>Instalación incluida</strong></>,
   <>Conoce tu <strong>huella</strong></>,
   <><strong>resiTips</strong> semanales</>]
 
 },
 {
   key: "pro", name: "Pro", color: "var(--resi-green)",
-  pm: "$22.900", pa: "$18.900",
+  pm: "$14.900", pa: "$12.900",
   tagline: "Para ir un paso más allá",
   subtag: "Suma residuos de comida y el doble de bags.",
   features: [
@@ -188,10 +187,6 @@ const HogaresPlanCard = ({ plan, billing }) => {
           letterSpacing: ".06em", textTransform: "uppercase",
           color: plan.color, margin: "0 0 6px"
         }}>{plan.tagline}</p>
-        <p style={{
-          fontFamily: "var(--font-body)", fontSize: 13, lineHeight: 1.45,
-          color: "var(--resi-fg-2)", margin: 0
-        }}>{plan.subtag}</p>
       </div>
 
       <div style={{ height: 1, background: "var(--resi-line)", margin: `0 ${px}px` }} />

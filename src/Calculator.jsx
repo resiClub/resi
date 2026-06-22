@@ -11,7 +11,7 @@ const ESTRATO_DATA = {
 const fmtCO = (n) => "$" + Math.round(n).toLocaleString("es-CO");
 
 const Calculator = () => {
-  const [estrato, setEstrato] = React.useState(3);
+  const [estrato, setEstrato] = React.useState(56);
   const [hogares, setHogares] = React.useState(60);
   const [tasa, setTasa] = React.useState(35);
   const [openInsights, setOpenInsights] = React.useState(false);
@@ -22,8 +22,11 @@ const Calculator = () => {
   const kgReciclados = Math.round(kgReciclablesTotal * tasa / 100);
   const facturaTotal = d.costo * hogares;
   const ahorroMes = Math.round(facturaTotal * tasa / 100);
-  const ahorroAnual = ahorroMes * 12;
   const ahorroMaxHogar = d.costo * 0.5;
+  // Precio suscripción plan Base según rango de apartamentos (= hogares)
+  const precioBase = hogares <= 30 ? 54900 : hogares <= 60 ? 64900 : hogares <= 120 ? 74900 : 84900;
+  // Ahorro neto anual = (ahorro mensual en aseo − inversión mensual en resi) × 12
+  const ahorroAnual = (ahorroMes - precioBase) * 12;
 
   return (
     <section id="calculadora" style={{
@@ -56,9 +59,9 @@ const Calculator = () => {
               <SectionLabel>Estrato del edificio</SectionLabel>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
                 {[
-                { v: 3, l: "3" },
+                { v: 56, l: "5 – 6" },
                 { v: 4, l: "4" },
-                { v: 56, l: "5 – 6" }].
+                { v: 3, l: "3" }].
                 map((o) =>
                 <button key={o.v} onClick={() => setEstrato(o.v)}
                 style={{
@@ -76,7 +79,7 @@ const Calculator = () => {
             <div>
               <SectionLabel>Número de hogares en tu edificio</SectionLabel>
               <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <input type="range" min="10" max="400" step="10" value={hogares}
+                <input type="range" min="10" max="180" step="10" value={hogares}
                 onChange={(e) => setHogares(parseInt(e.target.value))}
                 style={{ flex: 1 }} />
                 <div style={{
@@ -137,8 +140,8 @@ const Calculator = () => {
             display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.4fr 1fr", gap: isMobile ? 18 : 24, alignItems: "center"
           }}>
             <div>
-              <div style={{ fontSize: 13, color: "var(--resi-green-dark)", fontWeight: 700, marginBottom: 6 }}>
-                Ahorro potencial mensual
+              <div style={{ fontSize: 13, color: "var(--resi-green-dark)", fontWeight: 700, marginBottom: 6 }}>Ahorro mensual en aseo
+
               </div>
               <div style={{
                 fontFamily: "var(--font-display)", fontWeight: 700, fontSize: isMobile ? 40 : 52,
@@ -147,10 +150,19 @@ const Calculator = () => {
               <div style={{ fontSize: 14, color: "var(--resi-green-dark)", marginTop: 8 }}>
                 {tasa}% de descuento sobre manejo de residuos
               </div>
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: 7, marginTop: 14,
+                background: "rgba(7,7,78,.05)", border: "1px solid var(--resi-line)",
+                color: "var(--resi-fg-2)", padding: "6px 12px", borderRadius: "var(--r-pill)",
+                fontSize: 12.5, fontWeight: 600
+              }}>
+                <Icon name="wallet" size={14} style={{ color: "var(--resi-fg-3)" }} />
+                Inversión en resi: <strong style={{ fontWeight: 800, color: "var(--resi-navy)" }}>{fmtCO(precioBase)}/mes</strong>
+              </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 14, alignItems: isMobile ? "flex-start" : "flex-end" }}>
               <div style={{ textAlign: isMobile ? "left" : "right" }}>
-                <div style={{ fontSize: 13, color: "var(--resi-green-dark)", fontWeight: 700 }}>Ahorro anual proyectado</div>
+                <div style={{ fontSize: 13, color: "var(--resi-green-dark)", fontWeight: 700 }}>Ahorro neto anual</div>
                 <div style={{
                   fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 28,
                   color: "var(--resi-green-dark)", lineHeight: 1.1
@@ -179,20 +191,20 @@ const Calculator = () => {
           <button onClick={() => setOpenInsights((o) => !o)} style={{
             width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
             gap: 12, background: "none", border: "none", padding: 0, cursor: "pointer", textAlign: "left",
-            fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, color: "var(--resi-navy)",
+            fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, color: "var(--resi-navy)"
           }}>
             ¿Cómo resi hace posible este ahorro?
             <span style={{
               display: "inline-flex", flexShrink: 0, opacity: 0.6,
               transition: "transform var(--dur-base) var(--ease-out)",
-              transform: openInsights ? "rotate(180deg)" : "rotate(0deg)",
+              transform: openInsights ? "rotate(180deg)" : "rotate(0deg)"
             }}><Icon name="chevron-down" size={20} /></span>
           </button>
           <div style={{
             overflow: "hidden",
             maxHeight: openInsights ? 700 : 0,
             opacity: openInsights ? 1 : 0,
-            transition: "max-height var(--dur-slow) var(--ease-out), opacity var(--dur-base) var(--ease-out)",
+            transition: "max-height var(--dur-slow) var(--ease-out), opacity var(--dur-base) var(--ease-out)"
           }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 14, paddingTop: 18 }}>
               {[
